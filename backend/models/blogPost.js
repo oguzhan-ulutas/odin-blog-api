@@ -8,7 +8,7 @@ const BlogPostSchema = new Schema({
   date: { type: Date, default: Date.now },
 });
 
-UserSchema.virtual('url').get(function () {
+BlogPostSchema.virtual('url').get(function () {
   return `/blog-api/v1/blog-post/${this._id}`;
 });
 

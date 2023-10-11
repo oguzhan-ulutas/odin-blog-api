@@ -10,7 +10,7 @@ const CommentSchema = new Schema({
 });
 
 // Virtual for user url
-UserSchema.virtual('url').get(function () {
+CommentSchema.virtual('url').get(function () {
   return `/blog-api/v1/comment/${this._id}`;
 });
 
