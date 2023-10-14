@@ -20,6 +20,11 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
   res.send('NOT IMPLEMENTED: Log in post');
 });
 
+// Log out
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.send('NOT IMPLEMENTED: Log out');
+});
+
 // Display user info
 exports.displayUser = asyncHandler(async (req, res, next) => {
   res.send('NOT IMPLEMENTED: Display user info');
