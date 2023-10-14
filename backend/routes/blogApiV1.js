@@ -7,8 +7,12 @@ const commentController = require('../controllers/commentController');
 const userController = require('../controllers/userController');
 const adminController = require('../controllers/adminController');
 
+// BLOG POSTS ROUTES
 // Get home page
 router.get('/', blogPostController.index);
+
+// Display single post
+router.get('/post/:id', blogPostController.blogPostGet);
 
 // USER ROUTES
 // Display sing up form on get
@@ -40,10 +44,6 @@ router.get('/user/:id/delete', userController.deleteUserGet);
 
 // Delete user on post
 router.post('/user/:id/delete', userController.deleteUserPost);
-
-// BLOG POSTS ROUTES
-// Display single post
-router.get('/post/:id', blogPostController.blogPostGet);
 
 // COMMENT ROUTES
 // Add new comment

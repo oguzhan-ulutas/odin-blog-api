@@ -6,7 +6,6 @@ const CommentSchema = new Schema({
   body: { type: String, require: true },
   date: { type: Date, default: Date.now },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  blogPost: { type: Schema.Types.ObjectId, ref: 'BlogPost' },
 });
 
 // Virtual for user url
