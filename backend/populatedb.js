@@ -3,7 +3,8 @@
 console.log(
   'This script populates some test users and blog posts, comments to database. Specified database as argument - e.g.: node populatedb "mongodb+srv://cooluser:coolpassword@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority"',
 );
-
+// Import bycrpt
+const bcrypt = require('bcryptjs');
 // Get arguments passed on command line
 const userArgs = process.argv.slice(2);
 
@@ -41,6 +42,13 @@ async function userCreate(index, firstname, lastname, email, password, isAdmin) 
     password,
     isAdmin,
   });
+  bcrypt.hash(password, 10, async (err, hashedPassword) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    user.password = hashedPassword;
+  });
   await user.save();
   users[index] = user;
   console.log(`Added user: ${firstname}`);
@@ -69,7 +77,7 @@ async function commentCreate(index, body, date, user, blogPost) {
 async function createUsers() {
   console.log('Adding users');
   await Promise.all([
-    userCreate(0, 'Oguzhan', 'Ulutas', 'oguzhan@oguzhan.com', '1234', true),
+    userCreate(0, 'admin', 'admin', 'admin@admin.com', '1234', true),
     userCreate(1, 'Jenny', 'Gonzales', 'jenny@gmail.com', '1234', false),
     userCreate(2, 'John', 'Smith', 'john@yahoo.com', '1234', false),
     userCreate(3, 'Ali', 'Bayrak', 'ali@hotmail.com', '1234', false),
