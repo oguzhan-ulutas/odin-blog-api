@@ -28,7 +28,7 @@ router.get('/login', userController.loginGet);
 router.post('/login', userController.loginPost);
 
 // Log out on post
-router.get('/user/logout/:d', userController.logout);
+router.get('/user/logout/:id', userController.logout);
 
 // Display user info
 router.get('/user/:id', userController.displayUser);
@@ -70,9 +70,6 @@ router.get('/admin/add-new', adminController.addNewGet);
 // Add new post on post
 router.post('/admin/add-new', adminController.addNewPost);
 
-// Display single post
-router.get('/admin/post/:postid', adminController.postDetailGet);
-
 // Display post edit page on get
 router.get('/admin/post/:postid/edit', adminController.postEditGet);
 
@@ -88,9 +85,6 @@ router.post('/admin/post/:postid/delete', adminController.postDeletePost);
 // Display all coments of a post
 router.get('/admin/post/:postid/comments', adminController.commentsGet);
 
-// Display single comment
-router.get('/admin/post/:postid/comment/:id', adminController.commentDetailGet);
-
 // Display comment edit page on get
 router.get('/admin/post/:postid/comment/:id/edit', adminController.commentEditGet);
 
@@ -102,5 +96,11 @@ router.get('/admin/post/:postid/comment/:id/delete', adminController.commentDele
 
 // Delete comment on post req.
 router.post('/admin/post/:postid/comment/:id/delete', adminController.commentDeletePost);
+
+// Display single comment
+router.get('/admin/post/:postid/comment/:id', adminController.commentDetailGet);
+
+// Display single post
+router.get('/admin/post/:postid', adminController.postDetailGet);
 
 module.exports = router;
