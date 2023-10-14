@@ -6,6 +6,7 @@ const BlogPostSchema = new Schema({
   title: { type: String, required: true, maxLength: 100 },
   body: { type: String, require: true },
   date: { type: Date, default: Date.now },
+  isPublished: { type: Boolean, default: false },
 });
 
 BlogPostSchema.virtual('url').get(function () {
