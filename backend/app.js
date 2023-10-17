@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const indexRouter = require('./routes/index');
 const blogApiRouter = require('./routes/blogApiV1'); // Import routes for "blog api v1" area of site
@@ -30,6 +31,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Verify user if req. object has token
+app.use((res, req, next) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+    jwt.verify(token, 'iKnowINeedToUseDotenvFile', (err, user) => {
+      if (err) return res.sendStatus(403);
+      req.currentUser = user;
+    });
+  }
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/blog-api/v1', blogApiRouter); // Add catalog routes to middleware chain.

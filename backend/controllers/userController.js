@@ -92,7 +92,7 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
     return;
   }
 
-  jwt.sign({ user }, 'iKnowINeedToUse.envFile', '2 days', (err, token) => {
+  jwt.sign({ user }, 'iKnowINeedToUseDotenvFile', '2 days', (err, token) => {
     if (err) {
       res.sendStatus(403);
       return;
@@ -103,16 +103,19 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
 
 // Log out
 exports.logout = asyncHandler(async (req, res, next) => {
+  // Probably this route is unnecessary, log out can be implemented in frontend
   res.send('NOT IMPLEMENTED: Log out');
 });
 
 // Display user info
 exports.displayUser = asyncHandler(async (req, res, next) => {
+  // Probably this route is unnecessary, display user can be implemented in frontend
   res.send('NOT IMPLEMENTED: Display user info');
 });
 
 // Display update user form
 exports.updateUserGet = asyncHandler(async (req, res, next) => {
+  // Probably this route is unnecessary, update user get can be implemented in frontend
   res.send('NOT IMPLEMENTED: Display user update form');
 });
 
