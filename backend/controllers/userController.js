@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const user = require('../models/user');
 
 // Display sing up form on get
 exports.signUpGet = asyncHandler(async (req, res, next) => {
@@ -120,12 +121,44 @@ exports.updateUserGet = asyncHandler(async (req, res, next) => {
 });
 
 // Update user info on post
-exports.updateUserPost = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Update user on post');
-});
+exports.updateUserPost = [
+  // Validate and sanitize fields.
+  body('firstname').trim().escape().optional({ values: 'falsy' }),
+  body('lastname').trim().escape().optional({ values: 'falsy' }),
+  body('email').trim().escape().isEmail().withMessage('Invalid e-mail'),
+  body('password')
+    .trim()
+    .isLength({ min: 4 })
+    .escape()
+    .withMessage('Password must be at least four characters'),
+
+  async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    const updatedUser = new User({
+      firstname: req.body.firstname || req.currentUser.firstname,
+      lastname: req.body.lastname || req.currentUser.lastname,
+      email: req.body.email || req.currentUser.email,
+      password: req.body.password || req.currentUser.password,
+      isAdmin: req.currentUser.isAdmin,
+      _id: req.currentUser._id,
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with error messages.
+      res.json({ errors: errors.array() });
+    } else {
+      // Data from form is valid. Update the record.
+      await User.findByIdAndUpdate(req.params.id, updatedUser);
+      res.redirect(user.url);
+    }
+  },
+];
 
 // Show delete user warning
 exports.deleteUserGet = asyncHandler(async (req, res, next) => {
+  // Probably this route is unnecessary, delete get can be implemented in frontend
   res.send('NOT IMPLEMENTED: Display delete warning');
 });
 

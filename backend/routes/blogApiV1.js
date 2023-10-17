@@ -30,9 +30,6 @@ router.post('/login', userController.loginPost);
 // Log out on post
 router.get('/user/logout/:id', userController.logout);
 
-// Display user info
-router.get('/user/:id', userController.displayUser);
-
 // Display update user form
 router.get('/user/:id/update', userController.updateUserGet);
 
