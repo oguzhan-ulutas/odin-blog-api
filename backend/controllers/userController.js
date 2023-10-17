@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
@@ -71,12 +72,33 @@ exports.signUpPost = [
 
 // Display log in form on get
 exports.loginGet = asyncHandler(async (req, res, next) => {
+  // Probably this route is unnecessary, the form can be implemented in frontend
   res.send('NOT IMPLEMENTED: Log in get form');
 });
 
 // Log in on post
 exports.loginPost = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Log in post');
+  // Get user from db
+  const user = await User.findOne({ email: req.body.email });
+  const match = await bcrypt.compare(req.body.password, user.password);
+  console.log(req.header.authorization);
+
+  if (!user) {
+    res.json({ message: 'Incorrect username' });
+    return;
+  }
+  if (!match) {
+    res.json({ message: 'Incorrect password' });
+    return;
+  }
+
+  jwt.sign({ user }, 'iKnowINeedToUse.envFile', '2 days', (err, token) => {
+    if (err) {
+      res.sendStatus(403);
+      return;
+    }
+    res.json({ token });
+  });
 });
 
 // Log out

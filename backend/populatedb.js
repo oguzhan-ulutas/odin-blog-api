@@ -36,22 +36,22 @@ async function main() {
 }
 
 async function userCreate(index, firstname, lastname, email, password, isAdmin) {
-  const user = new User({
-    firstname,
-    lastname,
-    email,
-    password,
-    isAdmin,
-  });
   bcrypt.hash(password, 10, async (err, hashedPassword) => {
     if (err) {
       console.log(err);
       return;
     }
-    user.password = hashedPassword;
+    const user = new User({
+      firstname,
+      lastname,
+      email,
+      password: hashedPassword,
+      isAdmin,
+    });
+    await user.save();
+    users[index] = user;
   });
-  await user.save();
-  users[index] = user;
+
   console.log(`Added user: ${firstname}`);
 }
 
