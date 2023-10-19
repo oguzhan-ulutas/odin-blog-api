@@ -10,17 +10,17 @@ import SignupPage from "./03-signup-page/SignupPage";
 const Router = () => {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/blog-api/v1",
       element: <MainPage />,
       errorElement: <ErrorPage />,
     },
     {
-      path: "/login",
+      path: "/blog-api/v1/login",
       element: <LoginPage />,
       errorElement: <ErrorPage />,
     },
     {
-      path: "/signup",
+      path: "/blog-api/v1/signup",
       element: <SignupPage />,
       errorElement: <ErrorPage />,
     },

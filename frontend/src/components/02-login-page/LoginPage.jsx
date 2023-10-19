@@ -7,6 +7,7 @@ const LoginPage = () => {
       <Header />
       <div className="content-container">
         <form action="">
+          <h1>Login</h1>
           <div>
             <label htmlFor="email">*E-mail: </label>
             <input type="email" placeholder="abc@abc.com" name="email" />

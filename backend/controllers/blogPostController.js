@@ -4,7 +4,7 @@ const BlogPost = require('../models/blogPost');
 const Comment = require('../models/comment');
 const User = require('../models/user');
 
-// Display list of all Authors.
+// Display all post
 exports.index = asyncHandler(async (req, res, next) => {
   // Get published blog post data from database
   const blogPosts = await BlogPost.find({ isPublished: true })

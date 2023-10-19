@@ -78,6 +78,7 @@ main {
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 40px;
 }
 
@@ -90,6 +91,7 @@ header nav {
   display: flex;
   gap: 20px;
   align-items: center;
+  font-size: 1.2rem;
 }
 
 .content-container {
@@ -123,6 +125,7 @@ header nav {
 }
 
 main {
+  min-height: 100vh;
   display: grid;
   grid-template-rows: 3fr 16fr 1fr;
   gap: 10px;
@@ -136,6 +139,7 @@ form {
 form div {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 input {
   height: 2rem;

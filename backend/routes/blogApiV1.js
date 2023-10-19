@@ -15,9 +15,6 @@ router.get('/', blogPostController.index);
 router.get('/post/:id', blogPostController.blogPostGet);
 
 // USER ROUTES
-// Display sing up form on get
-router.get('/signup', userController.signUpGet);
-
 // Sing up on post
 router.post('/signup', userController.signUpPost);
 

@@ -6,12 +6,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const user = require('../models/user');
 
-// Display sing up form on get
-exports.signUpGet = asyncHandler(async (req, res, next) => {
-  // Probably this route is unnecessary, the form can be implemented in frontend
-  res.json({});
-});
-
 // Sing up on post
 exports.signUpPost = [
   // Validate and sanitize fields.
