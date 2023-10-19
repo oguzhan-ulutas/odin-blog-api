@@ -39,7 +39,6 @@ exports.signUpPost = [
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    console.log(req.body);
 
     // Create new user
     const user = new User({
@@ -164,5 +163,6 @@ exports.deleteUserGet = asyncHandler(async (req, res, next) => {
 
 // Delete user on post
 exports.deleteUserPost = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Delete user');
+  await User.findByIdAndRemove(req.body.userid);
+  res.redirect('/');
 });

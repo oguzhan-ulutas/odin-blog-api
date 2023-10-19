@@ -1,16 +1,47 @@
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require('express-validator');
+
+const Comment = require('../models/comment');
 
 // Add new comment
-exports.addNew = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Add new comment');
-});
+exports.addNew = [
+  body('comment')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage('Empty comments are not allowed.'),
+
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create new comment
+    const comment = new User({
+      body: req.body.comment,
+      user: req.currentUser._id,
+    });
+
+    if (!errors.isEmpty()) {
+      // There ara errors render form again with errors
+      res.json({ errors: errors.array() });
+      return;
+    }
+
+    // Save comment
+    await comment.save();
+    // Redirect to blog page
+    res.redirect('/blog-api/v1/');
+  }),
+];
 
 // Display warning on delete get
 exports.deleteGet = asyncHandler(async (req, res, next) => {
+  // Probably this route is unnecessary, the form can be implemented in frontend
   res.send('NOT IMPLEMENTED: Display warning on delete get');
 });
 
 // Delete comment on post
 exports.deletePost = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Delete comment on post');
+  await Comment.findByIdAndRemove(req.body.commentid);
+  res.redirect('/blog-api/v1/');
 });
