@@ -8,7 +8,7 @@ const MainPage = () => {
   return (
     <main>
       <Header />
-      <div className="blog-posts">
+      <div className="content-container">
         <BlogPost />
         <BlogPost />
         <BlogPost />

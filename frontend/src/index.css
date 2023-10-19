@@ -89,9 +89,10 @@ header a.logo {
 header nav {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
-.blog-posts {
+.content-container {
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -113,4 +114,35 @@ header nav {
 }
 .post-summary {
   line-height: 1.7rem;
+}
+
+.footer {
+  text-align: center;
+  font-size: 8px;
+  font-weight: bold;
+}
+
+main {
+  display: grid;
+  grid-template-rows: 3fr 16fr 1fr;
+  gap: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+form div {
+  display: flex;
+  flex-direction: column;
+}
+input {
+  height: 2rem;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 1rem;
+}
+label {
+  font-weight: 500;
 }
