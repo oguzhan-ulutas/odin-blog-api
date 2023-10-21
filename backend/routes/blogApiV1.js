@@ -18,9 +18,6 @@ router.get('/post/:id', blogPostController.blogPostGet);
 // Sing up on post
 router.post('/signup', userController.signUpPost);
 
-// Display log in form on get
-router.get('/login', userController.loginGet);
-
 // Log in on post
 router.post('/login', userController.loginPost);
 

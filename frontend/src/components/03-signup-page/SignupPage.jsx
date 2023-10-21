@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useState, Link } from "react";
 
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
+import ErrorSignup from "./ErrorSignup";
 
 const SignupPage = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [successSignup, setSuccessSignup] = useState("");
+  const [data, setData] = useState({});
 
-  const signup = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     // Sending post req. to api
@@ -17,14 +20,24 @@ const SignupPage = () => {
       method: "POST",
       body: JSON.stringify({ firstname, lastname, email, password }),
       headers: { "Content-Type": "application/json" },
-    });
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        setData(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
   };
 
   return (
     <main>
       <Header />
       <div className="content-container">
-        <form action="" onSubmit={signup}>
+        <ErrorSignup data={data} />
+        <form action="" onSubmit={handleSignup}>
           <h1>Signup</h1>
           <div>
             <label htmlFor="firstname">*First Name: </label>
@@ -69,6 +82,7 @@ const SignupPage = () => {
           <button>Signup</button>
         </form>
       </div>
+
       <Footer />
     </main>
   );

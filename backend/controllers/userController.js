@@ -33,49 +33,40 @@ exports.signUpPost = [
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
+    console.log(errors);
+
+    // crypt password
+    const salt = bcrypt.genSaltSync(10);
 
     // Create new user
     const user = new User({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
-      password: req.body.password,
+      password: bcrypt.hashSync(req.body.password, salt),
     });
 
     if (!errors.isEmpty()) {
       // There ara errors render form again with errors
       res.json({ errors: errors.array() });
-      return;
-    }
-
-    // Crypt password
-    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
-      if (err) {
-        next(err);
-        return;
+    } else {
+      // Save user
+      try {
+        await user.save();
+        // Redirect to log in page
+        res.json({ message: 'Success' });
+      } catch (err) {
+        res.json({ err });
       }
-      user.password = hashedPassword;
-    });
-
-    // Save user
-    await user.save();
-    // Redirect to log in page
-    res.redirect('/blog-api/v1/login');
+    }
   }),
 ];
-
-// Display log in form on get
-exports.loginGet = asyncHandler(async (req, res, next) => {
-  // Probably this route is unnecessary, the form can be implemented in frontend
-  res.send('NOT IMPLEMENTED: Log in get form');
-});
 
 // Log in on post
 exports.loginPost = asyncHandler(async (req, res, next) => {
   // Get user from db
   const user = await User.findOne({ email: req.body.email });
   const match = await bcrypt.compare(req.body.password, user.password);
-  console.log(req.header.authorization);
 
   if (!user) {
     res.json({ message: 'Incorrect username' });
@@ -86,11 +77,15 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
     return;
   }
 
-  jwt.sign({ user }, 'iKnowINeedToUseDotenvFile', '2 days', (err, token) => {
+  delete user.password;
+
+  jwt.sign({ ...user }, 'iKnowINeedToUseDotenvFile', { expiresIn: '2 days' }, (err, token) => {
     if (err) {
       res.sendStatus(403);
       return;
     }
+    res.setHeader('Authorization', `Bearer ${token}`);
+    console.log(res.headers);
     res.json({ token });
   });
 });

@@ -150,3 +150,7 @@ input {
 label {
   font-weight: 500;
 }
+
+.content-container .errors {
+  font-weight: 600;
+}
