@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
-const user = require('../models/user');
 
 // Sing up on post
 exports.signUpPost = [
@@ -33,7 +32,6 @@ exports.signUpPost = [
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    console.log(errors);
 
     // crypt password
     const salt = bcrypt.genSaltSync(10);
@@ -66,18 +64,20 @@ exports.signUpPost = [
 exports.loginPost = asyncHandler(async (req, res, next) => {
   // Get user from db
   const user = await User.findOne({ email: req.body.email });
-  const match = await bcrypt.compare(req.body.password, user.password);
 
   if (!user) {
+    console.log(user);
     res.json({ message: 'Incorrect username' });
     return;
   }
+
+  // Compare password
+  const match = await bcrypt.compare(req.body.password, user.password);
+
   if (!match) {
     res.json({ message: 'Incorrect password' });
     return;
   }
-
-  delete user.password;
 
   jwt.sign({ ...user }, 'iKnowINeedToUseDotenvFile', { expiresIn: '2 days' }, (err, token) => {
     if (err) {
@@ -85,7 +85,7 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
       return;
     }
     res.setHeader('Authorization', `Bearer ${token}`);
-    console.log(res.headers);
+
     res.json({ token });
   });
 });
