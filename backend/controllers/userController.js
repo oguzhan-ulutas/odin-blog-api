@@ -66,7 +66,6 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    console.log(user);
     res.json({ message: 'Incorrect username' });
     return;
   }
@@ -79,15 +78,24 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
     return;
   }
 
-  jwt.sign({ ...user }, 'iKnowINeedToUseDotenvFile', { expiresIn: '2 days' }, (err, token) => {
-    if (err) {
-      res.sendStatus(403);
-      return;
-    }
-    res.setHeader('Authorization', `Bearer ${token}`);
+  jwt.sign(
+    {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      isAdmin: user.isAdmin,
+      id: user._id,
+    },
+    'iKnowINeedToUseDotenvFile',
+    { expiresIn: '2 days' },
+    (err, token) => {
+      if (err) {
+        res.sendStatus(403);
+        return;
+      }
 
-    res.json({ token });
-  });
+      res.json({ token });
+    },
+  );
 });
 
 // Log out

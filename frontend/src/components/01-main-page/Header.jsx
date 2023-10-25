@@ -1,15 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ user, setUser }) => {
+  const handleLogout = (e) => {
+    localStorage.removeItem("data");
+    setUser({
+      firstname: "",
+      lastname: "",
+      id: "",
+      isAdmin: false,
+    });
+  };
+
   return (
     <header>
       <Link to="/blog-api/v1" className="logo">
         Odin Blog Api
       </Link>
       <nav>
-        <Link to="/blog-api/v1/login">Login</Link>
-        <Link to="/blog-api/v1/signup">Signup</Link>
+        {user.firstname && (
+          <>
+            <p>Welcome {user.firstname}</p>
+            <Link to="/blog-api/v1" onClick={handleLogout}>
+              Logout
+            </Link>
+          </>
+        )}
+        {!user.firstname && (
+          <>
+            {" "}
+            <Link to="/blog-api/v1/login">Login</Link>
+            <Link to="/blog-api/v1/signup">Signup</Link>
+          </>
+        )}
       </nav>
     </header>
   );

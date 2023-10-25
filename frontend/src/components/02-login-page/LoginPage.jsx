@@ -4,7 +4,7 @@ import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import ErrorLogin from "./ErrorLogin";
 
-const LoginPage = () => {
+const LoginPage = ({ user, setUser, setToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [data, setData] = useState({});
@@ -12,32 +12,36 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:3000/blog-api/v1/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
-      .then(function (res) {
-        return res.json();
-      })
-      .then(function (res) {
-        console.log(res);
-        setData(res);
-        console.log(data);
-      })
-      .catch(function (err) {
-        console.log(err);
+    const url = "http://localhost:3000/blog-api/v1/login";
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
-    // Storing token to local storage
-    if (data) {
-      localStorage.setItem("data", JSON.stringify(data));
+      const jsonData = await response.json();
+      if (response.status === 200) {
+        console.log("Success on fetch", jsonData);
+        setData(jsonData);
+        setToken(jsonData.token);
+      } else {
+        console.log("Error on fetch", jsonData.error);
+      }
+    } catch (err) {
+      console.log("Error: ", err);
     }
   };
 
+  // Storing token to local storage
+  if (data.token) {
+    localStorage.setItem("data", JSON.stringify(data));
+  }
+
   return (
     <main>
-      <Header />
+      <Header user={user} setUser={setUser} />
       <div className="content-container">
         <ErrorLogin data={data} />
         <form action="" onSubmit={handleLogin}>

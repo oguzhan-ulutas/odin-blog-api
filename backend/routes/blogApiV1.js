@@ -49,6 +49,7 @@ router.post('/comment/:id', commentController.deletePost);
 // ADMIN ROUTES
 // Display admin control panel
 router.get('/admin', adminController.index);
+
 // Display log in form on get
 router.get('/admin/login', adminController.loginGet);
 
