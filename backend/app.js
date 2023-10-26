@@ -6,6 +6,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const multer = require('multer');
 
 const indexRouter = require('./routes/index');
 const blogApiRouter = require('./routes/blogApiV1'); // Import routes for "blog api v1" area of site
@@ -22,6 +23,18 @@ main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
 }
+
+// Set multer for image upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '../frontend/assets/images');
+  },
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +53,7 @@ app.use((req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(' ')[1];
     jwt.verify(token, 'iKnowINeedToUseDotenvFile', {}, (err, user) => {
-      if (err) return res.sendStatus(403);
+      // if (err) return res.sendStatus(403);
       req.currentUser = user;
     });
   }

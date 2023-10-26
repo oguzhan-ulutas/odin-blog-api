@@ -15,19 +15,21 @@ const Router = () => {
     id: "",
     isAdmin: false,
   });
-
-  useEffect(() => {
-    // Get token from local storage
-    const data = JSON.parse(localStorage.getItem("data"));
-    if (data) {
-      setToken(data.token);
-    }
-  }, []);
+  const [blogPosts, setBlogPosts] = useState([]);
 
   const router = createBrowserRouter([
     {
       path: "/blog-api/v1",
-      element: <MainPage token={token} user={user} setUser={setUser} />,
+      element: (
+        <MainPage
+          token={token}
+          setToken={setToken}
+          user={user}
+          setUser={setUser}
+          blogPosts={blogPosts}
+          setBlogPosts={setBlogPosts}
+        />
+      ),
       errorElement: <ErrorPage />,
     },
     {

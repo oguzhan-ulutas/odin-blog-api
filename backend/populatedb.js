@@ -3,6 +3,7 @@
 console.log(
   'This script populates some test users and blog posts, comments to database. Specified database as argument - e.g.: node populatedb "mongodb+srv://cooluser:coolpassword@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority"',
 );
+const fs = require('fs');
 // Import bycrpt
 const bcrypt = require('bcryptjs');
 // Get arguments passed on command line
@@ -96,50 +97,50 @@ async function createBlogPosts() {
     blogPostCreate(
       'Lorem ipsum dolor sit amet',
       lorem,
-      '1971-12-16',
+      '1698327877014',
       [comments[0], comments[1], comments[2]],
       true,
     ),
     blogPostCreate(
       'Lorem ipsum dolor sit amet',
       lorem,
-      '1991-12-16',
+      '1698327877014',
       [comments[3], comments[4], comments[5]],
       true,
     ),
     blogPostCreate(
       'Lorem ipsum dolor sit amet',
       lorem,
-      '2000-12-16',
+      '1698327877014',
       [comments[6], comments[7], comments[8]],
       true,
     ),
     blogPostCreate(
       'Lorem ipsum dolor sit amet',
       lorem,
-      '2005-12-16',
+      '1698327877014',
       [comments[9], comments[10]],
       false,
     ),
-    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '2005-12-16', [], true),
-    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '2005-12-16', [], false),
+    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], true),
+    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], false),
   ]);
 }
 
 async function createComments() {
   console.log('Adding comments');
   await Promise.all([
-    commentCreate(0, loremComment, '2000-12-16', users[0]),
-    commentCreate(1, loremComment, '2001-12-16', users[1]),
-    commentCreate(2, loremComment, '2002-12-16', users[1]),
-    commentCreate(3, loremComment, '2003-12-16', users[2]),
-    commentCreate(4, loremComment, '2004-12-16', users[0]),
-    commentCreate(5, loremComment, '2005-12-16', users[1]),
-    commentCreate(6, loremComment, '2006-12-16', users[3]),
-    commentCreate(7, loremComment, '2007-12-16', users[3]),
-    commentCreate(8, loremComment, '2008-12-16', users[3]),
-    commentCreate(9, loremComment, '2009-12-16', users[3]),
-    commentCreate(10, loremComment, '2010-12-16', users[3]),
+    commentCreate(0, loremComment, '1698327877014', users[0]),
+    commentCreate(1, loremComment, '1698327877014', users[1]),
+    commentCreate(2, loremComment, '1698327877014', users[1]),
+    commentCreate(3, loremComment, '1698327877014', users[2]),
+    commentCreate(4, loremComment, '1698327877014', users[0]),
+    commentCreate(5, loremComment, '1698327877014', users[1]),
+    commentCreate(6, loremComment, '1698327877014', users[3]),
+    commentCreate(7, loremComment, '1698327877014', users[3]),
+    commentCreate(8, loremComment, '1698327877014', users[3]),
+    commentCreate(9, loremComment, '1698327877014', users[3]),
+    commentCreate(10, loremComment, '1698327877014', users[3]),
   ]);
 }
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet non curabitur gravida arcu. Vitae purus faucibus ornare suspendisse sed nisi lacus. Mi quis hendrerit dolor magna eget est lorem ipsum dolor. Odio ut enim blandit volutpat maecenas volutpat blandit. Aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc sed. Viverra tellus in hac habitasse platea dictumst vestibulum rhoncus. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Fames ac turpis egestas sed. Elementum sagittis vitae et leo duis ut diam quam nulla. Tellus molestie nunc non blandit massa. Ipsum a arcu cursus vitae congue. Nisl tincidunt eget nullam non nisi. Aliquet sagittis id consectetur purus ut faucibus pulvinar elementum. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Tincidunt dui ut ornare lectus. Pharetra sit amet aliquam id diam maecenas ultricies mi.

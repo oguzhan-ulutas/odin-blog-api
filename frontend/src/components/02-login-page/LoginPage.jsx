@@ -20,10 +20,12 @@ const LoginPage = ({ user, setUser, setToken }) => {
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
         credentials: "include",
+        mode: "cors",
       });
       const jsonData = await response.json();
       if (response.status === 200) {
         console.log("Success on fetch", jsonData);
+        console.log(jsonData);
         setData(jsonData);
         setToken(jsonData.token);
       } else {
