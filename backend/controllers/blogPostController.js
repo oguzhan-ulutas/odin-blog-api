@@ -16,7 +16,7 @@ exports.index = asyncHandler(async (req, res, next) => {
       id: req.currentUser.id,
     };
   }
-  console.log(user);
+
   // Get published blog post data from database
   const blogPosts = await BlogPost.find({ isPublished: true })
     .populate({ path: 'comments', populate: { path: 'user' } })

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = ({ user, setUser }) => {
-  console.log(user);
   const handleLogout = (e) => {
     localStorage.removeItem("data");
     setUser({

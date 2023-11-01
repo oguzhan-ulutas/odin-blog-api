@@ -15,7 +15,6 @@ const MainPage = ({
   useEffect(() => {
     // Get token from local storage
     const data = JSON.parse(localStorage.getItem("data") || null);
-    console.log(data);
     if (data) {
       setToken(data.token);
     }

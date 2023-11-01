@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const multer = require('multer');
+const fileuploader = require('express-fileupload');
+const { GridFsStorage } = require('multer-gridfs-storage');
 
 const indexRouter = require('./routes/index');
 const blogApiRouter = require('./routes/blogApiV1'); // Import routes for "blog api v1" area of site
@@ -24,18 +26,6 @@ async function main() {
   await mongoose.connect(mongoDB);
 }
 
-// Set multer for image upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '../frontend/assets/images');
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-const upload = multer({ storage });
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -46,6 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+app.use(fileuploader());
 
 // Verify user if req. object has token
 app.use((req, res, next) => {

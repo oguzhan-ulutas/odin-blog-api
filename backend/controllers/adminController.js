@@ -1,4 +1,27 @@
 const asyncHandler = require('express-async-handler');
+const multer = require('multer');
+const { GridFsStorage } = require('multer-gridfs-storage');
+
+const mongoDB =
+  'mongodb+srv://mkoulutas:PISrPqLGt8mgiwRR@cluster0.ighlcln.mongodb.net/?retryWrites=true&w=majority';
+
+// Create a storage object with a given configuration
+const storage = new GridFsStorage({
+  url: mongoDB,
+  file: (req, file) => {
+    // If it is an image, save to photos bucket
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+      return {
+        bucketName: 'photos',
+        filename: `${Date.now()}_${file.originalname}`,
+      };
+    }
+    // Otherwise save to default bucket
+    return `${Date.now()}_${file.originalname}`;
+  },
+});
+
+const upload = multer({ storage });
 
 // Display admin control panel
 exports.index = asyncHandler(async (req, res, next) => {
@@ -17,13 +40,24 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
 
 // Display add new post form
 exports.addNewGet = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Add new post form');
+  res.send('NOT IMPLEMENTED: Add new get to database');
 });
 
 // Add new post on post req.
-exports.addNewPost = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Add new post to database');
-});
+exports.addNewPost = [
+  upload.single('blogPhoto'),
+
+  asyncHandler(async (req, res, next) => {
+    const { file } = req;
+    // Respond with the file details
+    res.send({
+      message: 'Uploaded',
+      id: file.id,
+      name: file.filename,
+      contentType: file.contentType,
+    });
+  }),
+];
 
 // Display single post detail
 exports.postDetailGet = asyncHandler(async (req, res, next) => {

@@ -6,11 +6,13 @@ const BlogPost = ({ blogPosts }) => {
   const blogPost = blogPosts.map((post) => {
     return (
       <div key={post._id} className="blog-post">
-        <div key={post._id} className="post-image">
-          <img
-            src="https://cdn.buttercms.com/fnvdv16ESFybbT9hisQb"
-            alt="Blog img"
-          />
+        <div className="post-image">
+          <Link to={`post/${post._id}`}>
+            <img
+              src="https://cdn.buttercms.com/fnvdv16ESFybbT9hisQb"
+              alt="Blog img"
+            />
+          </Link>
         </div>
         <div className="post-text">
           <h2>{post.title}</h2>

@@ -6,6 +6,7 @@ console.log(
 const fs = require('fs');
 // Import bycrpt
 const bcrypt = require('bcryptjs');
+const base64 = require('base64-js');
 // Get arguments passed on command line
 const userArgs = process.argv.slice(2);
 
@@ -17,6 +18,17 @@ const Comment = require('./models/comment');
 
 const users = [];
 const comments = [];
+const imageBuffer = {
+  data: '',
+  contentType: 'jpg/png',
+  desc: 'Blog writing with scrabble game letters',
+};
+
+fs.readFile('/Users/oguzhan/Downloads/photo.jpg', (err, dataImg) => {
+  if (err) throw err;
+
+  imageBuffer.data = base64.fromByteArray(dataImg);
+});
 
 mongoose.set('strictQuery', false);
 
@@ -56,13 +68,14 @@ async function userCreate(index, firstname, lastname, email, password, isAdmin) 
   console.log(`Added user: ${firstname}`);
 }
 
-async function blogPostCreate(title, body, date, comments, isPublished) {
+async function blogPostCreate(title, body, date, comments, isPublished, image) {
   const blogPost = new BlogPost({
     title,
     body,
     date,
     comments,
     isPublished,
+    image,
   });
 
   await blogPost.save();
@@ -100,6 +113,7 @@ async function createBlogPosts() {
       '1698327877014',
       [comments[0], comments[1], comments[2]],
       true,
+      imageBuffer,
     ),
     blogPostCreate(
       'Lorem ipsum dolor sit amet',
@@ -107,6 +121,7 @@ async function createBlogPosts() {
       '1698327877014',
       [comments[3], comments[4], comments[5]],
       true,
+      imageBuffer,
     ),
     blogPostCreate(
       'Lorem ipsum dolor sit amet',
@@ -114,6 +129,7 @@ async function createBlogPosts() {
       '1698327877014',
       [comments[6], comments[7], comments[8]],
       true,
+      imageBuffer,
     ),
     blogPostCreate(
       'Lorem ipsum dolor sit amet',
@@ -121,9 +137,10 @@ async function createBlogPosts() {
       '1698327877014',
       [comments[9], comments[10]],
       false,
+      imageBuffer,
     ),
-    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], true),
-    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], false),
+    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], true, imageBuffer),
+    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], false, imageBuffer),
   ]);
 }
 

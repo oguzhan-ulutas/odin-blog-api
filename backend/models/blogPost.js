@@ -8,6 +8,7 @@ const BlogPostSchema = new Schema({
   date: { type: Date, default: Date.now },
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   isPublished: { type: Boolean, default: false },
+  image: { data: String, contentType: String, desc: String },
 });
 
 BlogPostSchema.virtual('url').get(function () {
