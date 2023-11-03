@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import avatar from "../../assets/avatar.jpeg";
 
 const Header = ({ user, setUser }) => {
   const handleLogout = (e) => {
@@ -14,6 +15,9 @@ const Header = ({ user, setUser }) => {
 
   return (
     <header>
+      <Link to="/blog-api/v1/admin/info">
+        <img src={avatar} alt="Male avatar image" className="avatar" />
+      </Link>
       <Link to="/blog-api/v1" className="logo">
         Odin Blog Api
       </Link>

@@ -49,21 +49,20 @@ async function main() {
 }
 
 async function userCreate(index, firstname, lastname, email, password, isAdmin) {
-  bcrypt.hash(password, 10, async (err, hashedPassword) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    const user = new User({
-      firstname,
-      lastname,
-      email,
-      password: hashedPassword,
-      isAdmin,
-    });
-    await user.save();
-    users[index] = user;
+  // crypt password
+  const salt = bcrypt.genSaltSync(10);
+
+  // Create new user
+  const user = new User({
+    firstname,
+    lastname,
+    email,
+    password: bcrypt.hashSync(password, salt),
+    isAdmin,
   });
+
+  await user.save();
+  users[index] = user;
 
   console.log(`Added user: ${firstname}`);
 }
@@ -83,6 +82,7 @@ async function blogPostCreate(title, body, date, comments, isPublished, image) {
 }
 
 async function commentCreate(index, body, date, user) {
+  console.log(user);
   const comment = new Comment({
     body,
     date,
@@ -101,6 +101,24 @@ async function createUsers() {
     userCreate(1, 'Jenny', 'Gonzales', 'jenny@gmail.com', '1234', false),
     userCreate(2, 'John', 'Smith', 'john@yahoo.com', '1234', false),
     userCreate(3, 'Ali', 'Bayrak', 'ali@hotmail.com', '1234', false),
+    userCreate(4, 'testFirstname', 'testLastname', 'test@test.com', '1234', false),
+  ]);
+}
+
+async function createComments() {
+  console.log('Adding comments');
+  await Promise.all([
+    commentCreate(0, loremComment, '1698327877014', users[0]),
+    commentCreate(1, loremComment, '1698327877014', users[1]),
+    commentCreate(2, loremComment, '1698327877014', users[1]),
+    commentCreate(3, loremComment, '1698327877014', users[2]),
+    commentCreate(4, loremComment, '1698327877014', users[0]),
+    commentCreate(5, loremComment, '1698327877014', users[1]),
+    commentCreate(6, loremComment, '1698327877014', users[3]),
+    commentCreate(7, loremComment, '1698327877014', users[3]),
+    commentCreate(8, loremComment, '1698327877014', users[3]),
+    commentCreate(9, loremComment, '1698327877014', users[3]),
+    commentCreate(10, loremComment, '1698327877014', users[3]),
   ]);
 }
 
@@ -139,27 +157,25 @@ async function createBlogPosts() {
       false,
       imageBuffer,
     ),
-    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], true, imageBuffer),
-    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], false, imageBuffer),
+    blogPostCreate(
+      'Lorem ipsum dolor sit amet',
+      lorem,
+      '1698327877014',
+      [comments[9], comments[10]],
+      true,
+      imageBuffer,
+    ),
+    blogPostCreate(
+      'Lorem ipsum dolor sit amet',
+      lorem,
+      '1698327877014',
+      [comments[9], comments[10]],
+      false,
+      imageBuffer,
+    ),
   ]);
 }
 
-async function createComments() {
-  console.log('Adding comments');
-  await Promise.all([
-    commentCreate(0, loremComment, '1698327877014', users[0]),
-    commentCreate(1, loremComment, '1698327877014', users[1]),
-    commentCreate(2, loremComment, '1698327877014', users[1]),
-    commentCreate(3, loremComment, '1698327877014', users[2]),
-    commentCreate(4, loremComment, '1698327877014', users[0]),
-    commentCreate(5, loremComment, '1698327877014', users[1]),
-    commentCreate(6, loremComment, '1698327877014', users[3]),
-    commentCreate(7, loremComment, '1698327877014', users[3]),
-    commentCreate(8, loremComment, '1698327877014', users[3]),
-    commentCreate(9, loremComment, '1698327877014', users[3]),
-    commentCreate(10, loremComment, '1698327877014', users[3]),
-  ]);
-}
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet non curabitur gravida arcu. Vitae purus faucibus ornare suspendisse sed nisi lacus. Mi quis hendrerit dolor magna eget est lorem ipsum dolor. Odio ut enim blandit volutpat maecenas volutpat blandit. Aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc sed. Viverra tellus in hac habitasse platea dictumst vestibulum rhoncus. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Fames ac turpis egestas sed. Elementum sagittis vitae et leo duis ut diam quam nulla. Tellus molestie nunc non blandit massa. Ipsum a arcu cursus vitae congue. Nisl tincidunt eget nullam non nisi. Aliquet sagittis id consectetur purus ut faucibus pulvinar elementum. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Tincidunt dui ut ornare lectus. Pharetra sit amet aliquam id diam maecenas ultricies mi.
 
 Habitasse platea dictumst vestibulum rhoncus. Nisl suscipit adipiscing bibendum est ultricies integer quis auctor. Venenatis cras sed felis eget velit aliquet sagittis id consectetur. Duis convallis convallis tellus id interdum velit laoreet. Aliquam eleifend mi in nulla posuere sollicitudin. Purus ut faucibus pulvinar elementum integer enim neque. Amet facilisis magna etiam tempor. Sed euismod nisi porta lorem mollis. Et netus et malesuada fames. Quis commodo odio aenean sed adipiscing diam donec adipiscing tristique. Commodo elit at imperdiet dui accumsan sit amet nulla. Vulputate odio ut enim blandit volutpat maecenas.

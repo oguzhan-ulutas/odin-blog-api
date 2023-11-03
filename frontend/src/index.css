@@ -71,8 +71,13 @@ img {
 }
 main {
   padding: 10px;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
 }
 
 header {
@@ -80,6 +85,7 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
+  width: 800px;
 }
 
 header a.logo {
@@ -97,7 +103,10 @@ header nav {
 .content-container {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   gap: 50px;
+  max-width: 600px;
 }
 .blog-post {
   display: grid;
@@ -124,13 +133,6 @@ header nav {
   font-weight: bold;
 }
 
-main {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: 3fr 16fr 1fr;
-  gap: 10px;
-}
-
 form {
   display: flex;
   flex-direction: column;
@@ -153,4 +155,8 @@ label {
 
 .content-container .errors {
   font-weight: 600;
+}
+
+.avatar {
+  width: 50px;
 }

@@ -9,8 +9,8 @@ const BlogPost = ({ blogPosts }) => {
         <div className="post-image">
           <Link to={`post/${post._id}`}>
             <img
-              src="https://cdn.buttercms.com/fnvdv16ESFybbT9hisQb"
-              alt="Blog img"
+              src={`data:image/jpeg;base64,${post.image.data}`}
+              alt={post.image.desc}
             />
           </Link>
         </div>
@@ -18,9 +18,9 @@ const BlogPost = ({ blogPosts }) => {
           <h2>{post.title}</h2>
           <div className="post-info">
             <Link className="post-author" to="/">
-              Oguzhan Ulutas
+              Joe Brown
             </Link>
-            <time>{format(parseISO(post.date), "yyyy-MM-dd")}</time>
+            <time>{format(parseISO(post.date), "MMMM d, y")}</time>
           </div>
           <p className="post-summary">{post.body.slice(0, 100) + "..."}</p>
         </div>
