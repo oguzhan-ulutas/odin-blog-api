@@ -157,14 +157,7 @@ async function createBlogPosts() {
       false,
       imageBuffer,
     ),
-    blogPostCreate(
-      'Lorem ipsum dolor sit amet',
-      lorem,
-      '1698327877014',
-      [comments[9], comments[10]],
-      true,
-      imageBuffer,
-    ),
+    blogPostCreate('Lorem ipsum dolor sit amet', lorem, '1698327877014', [], true, imageBuffer),
     blogPostCreate(
       'Lorem ipsum dolor sit amet',
       lorem,

@@ -1,11 +1,15 @@
 import base64 from "base64-js";
+import { format, parseISO } from "date-fns";
 import { useParams, Link } from "react-router-dom";
+
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
-import { format, parseISO } from "date-fns";
+import Comments from "./Comments";
+import { useState } from "react";
 
 const SingleBlogPost = ({ blogPosts, user, setUser }) => {
   const { id } = useParams();
+
   // Get related blog post from blogPosts
   const blogPost = blogPosts.filter((post) => post._id === id)[0];
 
@@ -23,6 +27,10 @@ const SingleBlogPost = ({ blogPosts, user, setUser }) => {
         </div>
         <img src={base64String} alt={blogPost.image.desc} />
         <article> {blogPost.body} </article>
+        <hr
+          style={{ border: "2px solid red", margin: "10px 0", width: "90%" }}
+        />
+        <Comments blogPost={blogPost} />
       </div>
       <Footer />
     </main>

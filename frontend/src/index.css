@@ -160,3 +160,16 @@ label {
 .avatar {
   width: 50px;
 }
+
+.comments {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.comment-header {
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
