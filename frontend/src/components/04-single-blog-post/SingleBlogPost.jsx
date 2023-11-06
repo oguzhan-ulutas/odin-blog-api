@@ -5,7 +5,6 @@ import { useParams, Link } from "react-router-dom";
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import Comments from "./Comments";
-import CreateComment from "./CreateComment";
 
 const SingleBlogPost = ({ blogPosts, user, setUser }) => {
   const { id } = useParams();
@@ -14,18 +13,18 @@ const SingleBlogPost = ({ blogPosts, user, setUser }) => {
   const blogPost = blogPosts.filter((post) => post._id === id)[0];
 
   const base64String = `data:image/jpeg;base64,${
-    blogPost ? blogPost.image.data : null
+    blogPost.title ? blogPost.image.data : null
   }`;
   return (
     <main>
       <Header user={user} setUser={setUser} />
       <div className="content-container">
-        {blogPost ? (
+        {blogPost.title ? (
           <>
             <h2>{blogPost.title}</h2>
             <div className="post-info">
               <Link className="post-author" to="/">
-                Joe Brown
+                Admin Admin
               </Link>
               <time>{format(parseISO(blogPost.date), "MMMM d, y")}</time>
             </div>
@@ -38,8 +37,8 @@ const SingleBlogPost = ({ blogPosts, user, setUser }) => {
                 width: "90%",
               }}
             />
-            <CreateComment user={user} />
-            <Comments blogPost={blogPost} />
+
+            <Comments blogPost={blogPost} user={user} />
           </>
         ) : null}
       </div>

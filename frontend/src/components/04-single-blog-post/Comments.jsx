@@ -1,13 +1,20 @@
 import { format, parseISO } from "date-fns";
+import { useState } from "react";
 
-const Comments = ({ blogPost }) => {
-  console.log(blogPost.comments);
-  const postComments = blogPost.comments;
+import CreateComment from "./CreateComment";
+
+const Comments = ({ blogPost, user }) => {
+  const [postComments, setPostComments] = useState(blogPost.comments);
 
   return (
     <>
-      <h3>{postComments.length} Comments</h3>
-      {postComments
+      <CreateComment
+        user={user}
+        postComments={postComments}
+        setPostComments={setPostComments}
+      />
+      <h3>{postComments[0]._id ? postComments.length : "0"} Comments</h3>
+      {postComments[0]._id
         ? postComments.map((comment) => {
             return (
               <div key={comment._id} className="comments">

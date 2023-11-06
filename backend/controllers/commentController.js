@@ -2,10 +2,11 @@ const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 
 const Comment = require('../models/comment');
+const User = require('../models/user');
 
 // Add new comment
 exports.addNew = [
-  body('comment')
+  body('commentBody')
     .trim()
     .isLength({ min: 1 })
     .escape()
@@ -15,10 +16,13 @@ exports.addNew = [
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
+    // find user by id
+    const user = await User.findById(req.body.userid);
+
     // Create new comment
-    const comment = new User({
-      body: req.body.comment,
-      user: req.currentUser._id,
+    const comment = new Comment({
+      body: req.body.commentBody,
+      user,
     });
 
     if (!errors.isEmpty()) {
@@ -30,7 +34,7 @@ exports.addNew = [
     // Save comment
     await comment.save();
     // Redirect to blog page
-    res.redirect('/blog-api/v1/');
+    res.json(comment);
   }),
 ];
 
