@@ -30,6 +30,59 @@ fs.readFile('/Users/oguzhan/Downloads/photo.jpg', (err, dataImg) => {
   imageBuffer.data = base64.fromByteArray(dataImg);
 });
 
+// Reading avatar files
+const avatar0 = {
+  data: '',
+  contentType: 'jpg/png',
+  desc: 'User avatar',
+};
+const avatar1 = {
+  data: '',
+  contentType: 'jpg/png',
+  desc: 'User avatar',
+};
+const avatar2 = {
+  data: '',
+  contentType: 'jpg/png',
+  desc: 'User avatar',
+};
+const avatar3 = {
+  data: '',
+  contentType: 'jpg/png',
+  desc: 'User avatar',
+};
+const avatar4 = {
+  data: '',
+  contentType: 'jpg/png',
+  desc: 'User avatar',
+};
+
+fs.readFile('backend/avatar_image/avatar.png', (err, dataImg) => {
+  if (err) throw err;
+
+  avatar0.data = base64.fromByteArray(dataImg);
+});
+fs.readFile('backend/avatar_image/avatar1.png', (err, dataImg) => {
+  if (err) throw err;
+
+  avatar1.data = base64.fromByteArray(dataImg);
+});
+fs.readFile('backend/avatar_image/avatar2.png', (err, dataImg) => {
+  if (err) throw err;
+
+  avatar2.data = base64.fromByteArray(dataImg);
+});
+fs.readFile('backend/avatar_image/avatar3.png', (err, dataImg) => {
+  if (err) throw err;
+
+  avatar3.data = base64.fromByteArray(dataImg);
+});
+fs.readFile('backend/avatar_image/avatar4.png', (err, dataImg) => {
+  if (err) throw err;
+
+  avatar4.data = base64.fromByteArray(dataImg);
+});
+
 mongoose.set('strictQuery', false);
 
 const mongoDB = userArgs[0];
@@ -48,9 +101,10 @@ async function main() {
   mongoose.connection.close();
 }
 
-async function userCreate(index, firstname, lastname, email, password, isAdmin) {
+async function userCreate(index, firstname, lastname, email, password, isAdmin, avatar) {
   // crypt password
   const salt = bcrypt.genSaltSync(10);
+  console.log(avatar);
 
   // Create new user
   const user = new User({
@@ -59,6 +113,7 @@ async function userCreate(index, firstname, lastname, email, password, isAdmin) 
     email,
     password: bcrypt.hashSync(password, salt),
     isAdmin,
+    avatar,
   });
 
   await user.save();
@@ -82,7 +137,6 @@ async function blogPostCreate(title, body, date, comments, isPublished, image) {
 }
 
 async function commentCreate(index, body, date, user) {
-  console.log(user);
   const comment = new Comment({
     body,
     date,
@@ -96,12 +150,13 @@ async function commentCreate(index, body, date, user) {
 
 async function createUsers() {
   console.log('Adding users');
+
   await Promise.all([
-    userCreate(0, 'admin', 'admin', 'admin@admin.com', '1234', true),
-    userCreate(1, 'Jenny', 'Gonzales', 'jenny@gmail.com', '1234', false),
-    userCreate(2, 'John', 'Smith', 'john@yahoo.com', '1234', false),
-    userCreate(3, 'Ali', 'Bayrak', 'ali@hotmail.com', '1234', false),
-    userCreate(4, 'testFirstname', 'testLastname', 'test@test.com', '1234', false),
+    userCreate(0, 'admin', 'admin', 'admin@admin.com', '1234', true, avatar0),
+    userCreate(1, 'Jenny', 'Gonzales', 'jenny@gmail.com', '1234', false, avatar1),
+    userCreate(2, 'John', 'Smith', 'john@yahoo.com', '1234', false, avatar2),
+    userCreate(3, 'Ali', 'Bayrak', 'ali@hotmail.com', '1234', false, avatar3),
+    userCreate(4, 'testFirstname', 'testLastname', 'test@test.com', '1234', false, avatar4),
   ]);
 }
 

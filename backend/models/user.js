@@ -13,6 +13,11 @@ const UserSchema = new Schema({
   },
   password: { type: String, required: true },
   isAdmin: { type: Boolean, default: false },
+  avatar: {
+    data: { type: String },
+    contentType: { type: String, default: 'jpg/png' },
+    desc: { type: String, default: 'User avatar' },
+  },
 });
 
 // Virtual for full name.

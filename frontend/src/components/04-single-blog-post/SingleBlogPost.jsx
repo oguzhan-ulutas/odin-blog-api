@@ -5,7 +5,6 @@ import { useParams, Link } from "react-router-dom";
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import Comments from "./Comments";
-import { useState } from "react";
 
 const SingleBlogPost = ({ blogPosts, user, setUser }) => {
   const { id } = useParams();
@@ -13,7 +12,9 @@ const SingleBlogPost = ({ blogPosts, user, setUser }) => {
   // Get related blog post from blogPosts
   const blogPost = blogPosts.filter((post) => post._id === id)[0];
 
-  const base64String = `data:image/jpeg;base64,${blogPost.image.data}`;
+  const base64String = `data:image/jpeg;base64,${
+    blogPost ? blogPost.image.data : null
+  }`;
   return (
     <main>
       <Header user={user} setUser={setUser} />
@@ -25,7 +26,7 @@ const SingleBlogPost = ({ blogPosts, user, setUser }) => {
           </Link>
           <time>{format(parseISO(blogPost.date), "MMMM d, y")}</time>
         </div>
-        <img src={base64String} alt={blogPost.image.desc} />
+        <img src={base64String} alt={blogPost ? blogPost.image.desc : null} />
         <article> {blogPost.body} </article>
         <hr
           style={{ border: "2px solid red", margin: "10px 0", width: "90%" }}

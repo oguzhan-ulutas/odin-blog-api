@@ -3,6 +3,7 @@ import { format, parseISO } from "date-fns";
 const Comments = ({ blogPost }) => {
   console.log(blogPost.comments);
   const postComments = blogPost.comments;
+
   return (
     <>
       <h3>{postComments.length} Comments</h3>
@@ -11,6 +12,10 @@ const Comments = ({ blogPost }) => {
             return (
               <div key={comment._id} className="comments">
                 <div className="comment-header">
+                  <img
+                    src={`data:image/png;base64,${comment.user.avatar.data}`}
+                    alt=""
+                  />
                   <p>
                     {comment.user.firstname} {comment.user.lastname}
                   </p>
