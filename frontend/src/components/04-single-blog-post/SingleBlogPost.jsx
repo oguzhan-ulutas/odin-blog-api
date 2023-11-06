@@ -5,6 +5,7 @@ import { useParams, Link } from "react-router-dom";
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import Comments from "./Comments";
+import CreateComment from "./CreateComment";
 
 const SingleBlogPost = ({ blogPosts, user, setUser }) => {
   const { id } = useParams();
@@ -19,19 +20,28 @@ const SingleBlogPost = ({ blogPosts, user, setUser }) => {
     <main>
       <Header user={user} setUser={setUser} />
       <div className="content-container">
-        <h2>{blogPost.title}</h2>
-        <div className="post-info">
-          <Link className="post-author" to="/">
-            Joe Brown
-          </Link>
-          <time>{format(parseISO(blogPost.date), "MMMM d, y")}</time>
-        </div>
-        <img src={base64String} alt={blogPost ? blogPost.image.desc : null} />
-        <article> {blogPost.body} </article>
-        <hr
-          style={{ border: "2px solid red", margin: "10px 0", width: "90%" }}
-        />
-        <Comments blogPost={blogPost} />
+        {blogPost ? (
+          <>
+            <h2>{blogPost.title}</h2>
+            <div className="post-info">
+              <Link className="post-author" to="/">
+                Joe Brown
+              </Link>
+              <time>{format(parseISO(blogPost.date), "MMMM d, y")}</time>
+            </div>
+            <img src={base64String} alt={blogPost.image.desc} />
+            <article> {blogPost.body} </article>
+            <hr
+              style={{
+                border: "2px solid red",
+                margin: "10px 0",
+                width: "90%",
+              }}
+            />
+            <CreateComment user={user} />
+            <Comments blogPost={blogPost} />
+          </>
+        ) : null}
       </div>
       <Footer />
     </main>

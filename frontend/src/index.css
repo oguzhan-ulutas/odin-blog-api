@@ -178,3 +178,21 @@ label {
   align-items: center;
   gap: 10px;
 }
+
+.new-comment-form,
+.ql-container.ql-snow,
+.ql-editor.ql-blank {
+  width: 600px;
+}
+.ql-toolbar,
+.ql-snow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.comment-login-info {
+  font-weight: 700;
+}
