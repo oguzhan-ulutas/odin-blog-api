@@ -27,7 +27,7 @@ const Comments = ({ blogPost, user, token, id }) => {
       })
       .then(function (res) {
         console.log(res);
-        // setPostComments([...postComments, res]);
+        setPostComments(res.comments);
       })
       .catch(function (err) {
         console.log(err);

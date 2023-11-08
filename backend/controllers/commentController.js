@@ -48,8 +48,8 @@ exports.deleteGet = asyncHandler(async (req, res, next) => {
 exports.deletePost = asyncHandler(async (req, res, next) => {
   console.log(req.body);
   // Delete comment from the blogPost
-  await BlogPost.updateOne(req.body.blogPostId, {
-    $pull: { comments: { _id: req.body.commentid } },
+  await BlogPost.findByIdAndUpdate(req.body.blogPostId, {
+    $pull: { comments: req.body.commentid },
   });
 
   await Comment.findByIdAndRemove(req.body.commentid);
