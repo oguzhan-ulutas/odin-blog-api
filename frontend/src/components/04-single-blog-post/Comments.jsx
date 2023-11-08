@@ -4,9 +4,35 @@ import HTMLString from "react-html-string";
 
 import CreateComment from "./CreateComment";
 
-const Comments = ({ blogPost, user, token }) => {
+const Comments = ({ blogPost, user, token, id }) => {
   const [postComments, setPostComments] = useState(blogPost.comments);
   console.log(user);
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log(e.target.className);
+    const commentid = e.target.className;
+    const url = `http://localhost:3000/blog-api/v1/comment/${commentid}`;
+    // Sending post req. to api
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ commentid, blogPostId: id }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        console.log(res);
+        // setPostComments([...postComments, res]);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -15,6 +41,7 @@ const Comments = ({ blogPost, user, token }) => {
         postComments={postComments}
         setPostComments={setPostComments}
         token={token}
+        id={id}
       />
       <h3>{postComments[0]._id ? postComments.length : "0"} Comments</h3>
       {postComments[0]._id
@@ -36,10 +63,11 @@ const Comments = ({ blogPost, user, token }) => {
                   <HTMLString html={comment.body} />
                 </div>
                 <div className="comment-buttons">
-                  {user.id === comment.user._id ? (
+                  {user.id === comment.user._id || user.isAdmin ? (
                     <>
-                      <button>Edit</button>
-                      <button>Delete</button>
+                      <button className={comment._id} onClick={handleDelete}>
+                        Delete
+                      </button>
                     </>
                   ) : null}
                 </div>

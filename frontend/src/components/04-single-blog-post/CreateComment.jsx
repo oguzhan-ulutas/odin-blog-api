@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const CreateComment = ({ user, postComments, setPostComments, token }) => {
+const CreateComment = ({ user, postComments, setPostComments, token, id }) => {
   const [comment, setComment] = useState("");
 
   const handleSubmit = (e) => {
@@ -14,7 +14,7 @@ const CreateComment = ({ user, postComments, setPostComments, token }) => {
     // Sending post req. to api
     fetch(url, {
       method: "POST",
-      body: JSON.stringify({ commentBody: comment }),
+      body: JSON.stringify({ commentBody: comment, blogPostId: id }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

@@ -37,14 +37,14 @@ router.get('/user/:id/delete', userController.deleteUserGet);
 router.post('/user/:id/delete', userController.deleteUserPost);
 
 // COMMENT ROUTES
-// Add new comment
-router.post('/comment', commentController.addNew);
-
 // Display warning on delete get
 router.get('/comment/:id', commentController.deleteGet);
 
 // Delete comment on post
 router.post('/comment/:id', commentController.deletePost);
+
+// Add new comment
+router.post('/comment', commentController.addNew);
 
 // ADMIN ROUTES
 // Display admin control panel

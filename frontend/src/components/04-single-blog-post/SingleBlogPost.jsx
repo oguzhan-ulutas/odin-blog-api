@@ -38,7 +38,7 @@ const SingleBlogPost = ({ blogPosts, user, setUser, token }) => {
               }}
             />
 
-            <Comments blogPost={blogPost} user={user} token={token} />
+            <Comments blogPost={blogPost} user={user} token={token} id={id} />
           </>
         ) : null}
       </div>

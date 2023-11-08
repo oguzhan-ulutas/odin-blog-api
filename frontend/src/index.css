@@ -197,3 +197,8 @@ label {
 .comment-login-info {
   font-weight: 700;
 }
+.comment-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
