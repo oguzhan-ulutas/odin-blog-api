@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const CreateComment = ({ user, postComments, setPostComments }) => {
+const CreateComment = ({ user, postComments, setPostComments, token }) => {
   const [comment, setComment] = useState("");
 
   const handleSubmit = (e) => {
@@ -14,8 +14,12 @@ const CreateComment = ({ user, postComments, setPostComments }) => {
     // Sending post req. to api
     fetch(url, {
       method: "POST",
-      body: JSON.stringify({ commentBody: comment, userid: user.id }),
-      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ commentBody: comment }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
     })
       .then(function (res) {
         return res.json();
@@ -27,19 +31,17 @@ const CreateComment = ({ user, postComments, setPostComments }) => {
         console.log(err);
       });
   };
-  console.log(comment);
-  console.log(user);
   return user.id ? (
     <form action="" className="new-comment-form" onSubmit={handleSubmit}>
       <ReactQuill
         placeholder="Enter a comment..."
         onChange={(newValue) => {
           // Triming first and last 3 char of value
-          const trimmedString = newValue.substring(3, newValue.length - 4);
-          setComment(trimmedString);
+          // const trimmedString = newValue.substring(3, newValue.length - 4);
+          setComment(newValue);
+          console.log(newValue);
         }}
       />
-      <input type="hidden" name="user" value={user} />
       <button>Create Comment</button>
     </form>
   ) : (

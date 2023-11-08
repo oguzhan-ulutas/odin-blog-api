@@ -6,7 +6,7 @@ import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import Comments from "./Comments";
 
-const SingleBlogPost = ({ blogPosts, user, setUser }) => {
+const SingleBlogPost = ({ blogPosts, user, setUser, token }) => {
   const { id } = useParams();
 
   // Get related blog post from blogPosts
@@ -38,7 +38,7 @@ const SingleBlogPost = ({ blogPosts, user, setUser }) => {
               }}
             />
 
-            <Comments blogPost={blogPost} user={user} />
+            <Comments blogPost={blogPost} user={user} token={token} />
           </>
         ) : null}
       </div>

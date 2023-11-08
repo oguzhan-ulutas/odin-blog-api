@@ -46,7 +46,12 @@ const Router = () => {
     {
       path: "/blog-api/v1/post/:id",
       element: (
-        <SingleBlogPost blogPosts={blogPosts} user={user} setUser={setUser} />
+        <SingleBlogPost
+          blogPosts={blogPosts}
+          user={user}
+          setUser={setUser}
+          token={token}
+        />
       ),
       errorElement: <ErrorPage />,
     },

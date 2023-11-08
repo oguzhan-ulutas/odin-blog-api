@@ -6,19 +6,15 @@ const User = require('../models/user');
 
 // Add new comment
 exports.addNew = [
-  body('commentBody')
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage('Empty comments are not allowed.'),
+  body('commentBody').trim().isLength({ min: 1 }).withMessage('Empty comments are not allowed.'),
 
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
     // find user by id
-    const user = await User.findById(req.body.userid);
-
+    const user = await User.findById(req.currentUser.id);
+    console.log(req.body.commentBody);
     // Create new comment
     const comment = new Comment({
       body: req.body.commentBody,
