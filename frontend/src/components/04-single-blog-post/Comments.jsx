@@ -6,10 +6,10 @@ import CreateComment from "./CreateComment";
 
 const Comments = ({ blogPost, user, token, id }) => {
   const [postComments, setPostComments] = useState(blogPost.comments);
-  console.log(user);
+
   const handleDelete = (e) => {
     e.preventDefault();
-    console.log(e.target.className);
+
     const commentid = e.target.className;
     const url = `http://localhost:3000/blog-api/v1/comment/${commentid}`;
     // Sending post req. to api
@@ -26,7 +26,6 @@ const Comments = ({ blogPost, user, token, id }) => {
         return res.json();
       })
       .then(function (res) {
-        console.log(res);
         setPostComments(res.comments);
       })
       .catch(function (err) {
@@ -46,7 +45,6 @@ const Comments = ({ blogPost, user, token, id }) => {
       <h3>{postComments[0]._id ? postComments.length : "0"} Comments</h3>
       {postComments[0]._id
         ? postComments.map((comment) => {
-            console.log(comment.user);
             return (
               <div key={comment._id} className="comments">
                 <div className="comment-header">

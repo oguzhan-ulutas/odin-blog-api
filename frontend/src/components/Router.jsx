@@ -7,6 +7,7 @@ import ErrorPage from "./ErrorPage";
 import LoginPage from "./02-login-page/LoginPage";
 import SignupPage from "./03-signup-page/SignupPage";
 import SingleBlogPost from "./04-single-blog-post/SingleBlogPost";
+import User from "./05-user/User";
 
 const Router = () => {
   const [token, setToken] = useState("");
@@ -53,6 +54,11 @@ const Router = () => {
           token={token}
         />
       ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/blog-api/v1/user/:userid",
+      element: <User user={user} setUser={setUser} />,
       errorElement: <ErrorPage />,
     },
   ]);

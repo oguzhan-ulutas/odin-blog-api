@@ -21,7 +21,7 @@ exports.addNew = [
       body: req.body.commentBody,
       user,
     });
-    console.log(comment);
+
     // Add comment to blog post
     await BlogPost.findByIdAndUpdate(req.body.blogPostId, { $push: { comments: comment._id } });
 
@@ -46,7 +46,6 @@ exports.deleteGet = asyncHandler(async (req, res, next) => {
 
 // Delete comment on post
 exports.deletePost = asyncHandler(async (req, res, next) => {
-  console.log(req.body);
   // Delete comment from the blogPost
   await BlogPost.findByIdAndUpdate(req.body.blogPostId, {
     $pull: { comments: req.body.commentid },

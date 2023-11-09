@@ -1,6 +1,7 @@
 import base64 from "base64-js";
 import { format, parseISO } from "date-fns";
 import { useParams, Link } from "react-router-dom";
+import { useEffect } from "react";
 
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
@@ -12,9 +13,7 @@ const SingleBlogPost = ({ blogPosts, user, setUser, token }) => {
   // Get related blog post from blogPosts
   const blogPost = blogPosts.filter((post) => post._id === id)[0];
 
-  const base64String = `data:image/jpeg;base64,${
-    blogPost.title ? blogPost.image.data : null
-  }`;
+  const base64String = `data:image/jpeg;base64,${blogPost.image.data}`;
   return (
     <main>
       <Header user={user} setUser={setUser} />

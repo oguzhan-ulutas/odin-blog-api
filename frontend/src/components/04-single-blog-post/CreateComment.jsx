@@ -36,10 +36,7 @@ const CreateComment = ({ user, postComments, setPostComments, token, id }) => {
       <ReactQuill
         placeholder="Enter a comment..."
         onChange={(newValue) => {
-          // Triming first and last 3 char of value
-          // const trimmedString = newValue.substring(3, newValue.length - 4);
           setComment(newValue);
-          console.log(newValue);
         }}
       />
       <button>Create Comment</button>

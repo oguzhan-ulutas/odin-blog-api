@@ -15,16 +15,19 @@ const Header = ({ user, setUser }) => {
 
   return (
     <header>
-      <Link to="/blog-api/v1/admin/info">
-        <img src={avatar} alt="Male avatar image" className="avatar" />
-      </Link>
-      <Link to="/blog-api/v1" className="logo">
-        Odin Blog Api
-      </Link>
+      <div className="header-title">
+        <Link to="/blog-api/v1/admin/info">
+          <img src={avatar} alt="Male avatar image" className="avatar" />
+        </Link>
+        <Link to="/blog-api/v1" className="logo">
+          Odin Blog Api
+        </Link>
+      </div>
       <nav>
         {user.firstname && (
           <>
             <p>Welcome {user.firstname}</p>
+            <Link to={`/blog-api/v1/user/${user.id}`}>Profile</Link>
             <Link to="/blog-api/v1" onClick={handleLogout}>
               Logout
             </Link>

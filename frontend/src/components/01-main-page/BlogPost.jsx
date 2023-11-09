@@ -18,7 +18,7 @@ const BlogPost = ({ blogPosts }) => {
           <h2>{post.title}</h2>
           <div className="post-info">
             <Link className="post-author" to="/">
-              Joe Brown
+              Admin Admin
             </Link>
             <time>{format(parseISO(post.date), "MMMM d, y")}</time>
           </div>
