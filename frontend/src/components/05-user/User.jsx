@@ -9,10 +9,11 @@ const User = ({ user, setUser }) => {
   const [fieldString, setFieldString] = useState("");
   const [inputType, setInputType] = useState("");
   console.log(user);
+
   const handleClick = (e) => {
-    e.preventDefault();
     const field = e.target.classList[1];
     setFieldName(field);
+
     if (field === "firstname") {
       setFieldString("First Name");
       setInputType("text");
@@ -37,7 +38,7 @@ const User = ({ user, setUser }) => {
         {fieldName && (
           <>
             <form action="">
-              <h5>{`Enter New ${fieldString}`}</h5>
+              <h4>{`Enter New ${fieldString}`}</h4>
               <div>
                 <label htmlFor={fieldName}>{`*${fieldString} :`} </label>
                 <input
@@ -47,40 +48,40 @@ const User = ({ user, setUser }) => {
                   onChange={() => {}}
                 />
               </div>
-              <button>Change</button>
+              <button>{`Change ${fieldString}`}</button>
             </form>
           </>
         )}
         {user.firstname && (
           <>
-            <h4>Welcome {user.firstname}</h4>
+            <h3>Welcome {user.firstname}</h3>
             <div className="update-profile">
               <div className="update-item firstname" onClick={handleClick}>
-                <div>Change first name</div>
+                <div className="first firstname">Change first name</div>
                 <div>></div>
               </div>
 
               <hr />
               <div className="update-item lastname" onClick={handleClick}>
-                <div>Change last name</div>
+                <div className="first lastname">Change last name</div>
                 <div>></div>
               </div>
 
               <hr />
               <div className="update-item email" onClick={handleClick}>
-                <div>Change e-mail</div>
+                <div className="first email">Change e-mail</div>
                 <div>></div>
               </div>
 
               <hr />
               <div className="update-item password" onClick={handleClick}>
-                <div>Change password</div>
+                <div className="first password">Change password</div>
                 <div>></div>
               </div>
 
               <hr />
               <div className="update-item image" onClick={handleClick}>
-                <div>Change Avatar</div>
+                <div className="first image">Change Avatar</div>
                 <div>></div>
               </div>
             </div>

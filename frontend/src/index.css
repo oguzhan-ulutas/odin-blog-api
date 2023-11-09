@@ -234,8 +234,13 @@ label {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  z-index: 5;
 }
 .update-item:hover {
   background-color: rgb(210, 210, 210);
   cursor: pointer;
+}
+
+div.update-item > div {
+  z-index: 1;
 }
