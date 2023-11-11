@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import bcrypt from "bcryptjs";
+import base64 from "base64-js";
+import fs from "fs";
 
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 
-const User = ({ user, setUser }) => {
+const User = ({ user, setUser, token }) => {
   const [fieldName, setFieldName] = useState("");
   const [fieldString, setFieldString] = useState("");
   const [inputType, setInputType] = useState("");
-  console.log(user);
+
+  const [input, setInput] = useState("");
 
   const handleClick = (e) => {
     const field = e.target.classList[1];
@@ -31,13 +36,93 @@ const User = ({ user, setUser }) => {
       setInputType("file");
     }
   };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let obj = { [fieldName]: input };
+
+    // Sending post req. to api
+    const url = `http://localhost:3000/blog-api/v1/user/${user.id}/update`;
+
+    // Crypt the password
+    if (fieldName === "password") {
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(input, salt);
+      obj = { password: hashedPassword };
+    }
+
+    // Handle Image upload
+    if (fieldName === "image") {
+      const file = e.target[0].files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = () => {
+        // reader.result contains the base64-encoded string
+        const base64String = reader.result.split(",")[1];
+        obj = {
+          avatar: {
+            data: base64String,
+          },
+        };
+        console.log(obj);
+        fetch(url, {
+          method: "POST",
+          body: JSON.stringify(obj),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+          mode: "cors",
+        })
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (res) {
+            setUser(res);
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+      };
+    } else {
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+        mode: "cors",
+      })
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (res) {
+          setUser(res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <main>
       <Header user={user} setUser={setUser}></Header>
       <div className="content-container">
         {fieldName && (
           <>
-            <form action="">
+            <form action="" onSubmit={handleSubmit}>
               <h4>{`Enter New ${fieldString}`}</h4>
               <div>
                 <label htmlFor={fieldName}>{`*${fieldString} :`} </label>
@@ -45,7 +130,7 @@ const User = ({ user, setUser }) => {
                   type={inputType}
                   placeholder={`*Enter ${fieldString}...`}
                   name={fieldName}
-                  onChange={() => {}}
+                  onChange={handleChange}
                 />
               </div>
               <button>{`Change ${fieldString}`}</button>

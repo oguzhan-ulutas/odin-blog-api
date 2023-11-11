@@ -117,40 +117,28 @@ exports.updateUserGet = asyncHandler(async (req, res, next) => {
 });
 
 // Update user info on post
-exports.updateUserPost = [
-  // Validate and sanitize fields.
-  body('firstname').trim().escape().optional({ values: 'falsy' }),
-  body('lastname').trim().escape().optional({ values: 'falsy' }),
-  body('email').trim().escape().isEmail().withMessage('Invalid e-mail'),
-  body('password')
-    .trim()
-    .isLength({ min: 4 })
-    .escape()
-    .withMessage('Password must be at least four characters'),
+exports.updateUserPost = async (req, res, next) => {
+  // Extract the validation errors from a request.
+  const errors = validationResult(req);
 
-  async (req, res, next) => {
-    // Extract the validation errors from a request.
-    const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    // There are errors. Render the form again with error messages.
+    res.json({ errors: errors.array() });
+  } else {
+    // Data from form is valid. Update the record.
+    const updatedUser = await User.findByIdAndUpdate(req.currentUser.id, req.body, { new: true });
 
-    const updatedUser = new User({
-      firstname: req.body.firstname || req.currentUser.firstname,
-      lastname: req.body.lastname || req.currentUser.lastname,
-      email: req.body.email || req.currentUser.email,
-      password: req.body.password || req.currentUser.password,
-      isAdmin: req.currentUser.isAdmin,
-      _id: req.currentUser._id,
-    });
-
-    if (!errors.isEmpty()) {
-      // There are errors. Render the form again with error messages.
-      res.json({ errors: errors.array() });
-    } else {
-      // Data from form is valid. Update the record.
-      await User.findByIdAndUpdate(req.params.id, updatedUser);
-      res.redirect(user.url);
-    }
-  },
-];
+    const user = {
+      firstname: updatedUser.firstname,
+      lastname: updatedUser.lastname,
+      id: updatedUser._id,
+      avatar: updatedUser.avatar,
+      isAdmin: updatedUser.avatar,
+    };
+    res.redirect(user.url);
+  }
+  2;
+};
 
 // Show delete user warning
 exports.deleteUserGet = asyncHandler(async (req, res, next) => {

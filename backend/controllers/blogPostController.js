@@ -14,6 +14,7 @@ exports.index = asyncHandler(async (req, res, next) => {
       lastname: req.currentUser.lastname,
       isAdmin: req.currentUser.isAdmin,
       id: req.currentUser.id,
+      avatar: req.currentUser.avatar,
     };
   }
 

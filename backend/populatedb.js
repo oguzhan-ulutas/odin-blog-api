@@ -104,7 +104,6 @@ async function main() {
 async function userCreate(index, firstname, lastname, email, password, isAdmin, avatar) {
   // crypt password
   const salt = bcrypt.genSaltSync(10);
-  console.log(avatar);
 
   // Create new user
   const user = new User({
