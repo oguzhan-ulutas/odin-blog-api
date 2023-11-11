@@ -132,10 +132,6 @@ const User = ({ user, setUser, token, setToken }) => {
       .then(function (res) {
         return res.json();
       })
-      .then(function (res) {
-        console.log(res);
-        // setData(res);
-      })
       .catch(function (err) {
         console.log(err);
       });

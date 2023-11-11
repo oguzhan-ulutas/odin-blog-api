@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
@@ -70,6 +71,10 @@ const LoginPage = ({ user, setUser, setToken }) => {
           </div>
           <button>Login</button>
         </form>
+        <p>
+          Don't you have account?{" "}
+          <Link to={"/blog-api/v1/signup"}>Sign up</Link>
+        </p>
       </div>
       <Footer />
     </main>
