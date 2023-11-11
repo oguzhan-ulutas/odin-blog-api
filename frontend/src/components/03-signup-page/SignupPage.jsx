@@ -9,16 +9,18 @@ const SignupPage = ({ user, setUser }) => {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState({ avatar: { data: "" } });
   const [data, setData] = useState({});
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
     const url = "http://localhost:3000/blog-api/v1/signup";
 
     // Sending post req. to api
     fetch(url, {
       method: "POST",
-      body: JSON.stringify({ firstname, lastname, email, password }),
+      body: JSON.stringify({ firstname, lastname, email, password, avatar }),
       headers: { "Content-Type": "application/json" },
     })
       .then(function (res) {
@@ -77,6 +79,24 @@ const SignupPage = ({ user, setUser }) => {
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="avatar">Avatar: </label>
+            <input
+              type="file"
+              placeholder="Add image..."
+              name="avatar"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+
+                reader.onloadend = () => {
+                  const base64String = reader.result.split(",")[1];
+                  setAvatar({ data: base64String });
+                };
+              }}
             />
           </div>
           <button>Signup</button>

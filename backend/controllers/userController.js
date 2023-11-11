@@ -36,12 +36,15 @@ exports.signUpPost = [
     // crypt password
     const salt = bcrypt.genSaltSync(10);
 
+    console.log(req.body);
+
     // Create new user
     const user = new User({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, salt),
+      avatar: req.body.avatar,
     });
 
     if (!errors.isEmpty()) {
@@ -84,6 +87,7 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
       lastname: user.lastname,
       isAdmin: user.isAdmin,
       id: user._id,
+      avatar: user.avatar,
     },
     'iKnowINeedToUseDotenvFile',
     { expiresIn: '2 days' },

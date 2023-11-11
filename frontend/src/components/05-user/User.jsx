@@ -72,7 +72,7 @@ const User = ({ user, setUser, token }) => {
             data: base64String,
           },
         };
-        console.log(obj);
+
         fetch(url, {
           method: "POST",
           body: JSON.stringify(obj),
