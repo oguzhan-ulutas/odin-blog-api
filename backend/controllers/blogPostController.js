@@ -20,7 +20,10 @@ exports.index = asyncHandler(async (req, res, next) => {
 
   // Get published blog post data from database
   const blogPosts = await BlogPost.find({ isPublished: true })
-    .populate({ path: 'comments', populate: { path: 'user' } })
+    .populate({
+      path: 'comments',
+      populate: { path: 'user', select: 'firstname lastname avatar isAdmin _id' },
+    })
     .sort({ date: 1 })
     .exec();
 

@@ -1,14 +1,12 @@
-import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { use, useState } from "react";
 
 import bcrypt from "bcryptjs";
-import base64 from "base64-js";
-import fs from "fs";
 
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 
-const User = ({ user, setUser, token }) => {
+const User = ({ user, setUser, token, setToken }) => {
   const [fieldName, setFieldName] = useState("");
   const [fieldString, setFieldString] = useState("");
   const [inputType, setInputType] = useState("");
@@ -116,6 +114,43 @@ const User = ({ user, setUser, token }) => {
     }
   };
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log(user.id);
+
+    const url = `http://localhost:3000/blog-api/v1/user/${user.id}/delete`;
+
+    // Sending post req. to api
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ userid: user.id }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        console.log(res);
+        // setData(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    // Deleting token from local storage
+    localStorage.removeItem("data");
+    setUser({
+      firstname: "",
+      lastname: "",
+      id: "",
+      isAdmin: false,
+    });
+    setToken("");
+  };
+
   return (
     <main>
       <Header user={user} setUser={setUser}></Header>
@@ -142,31 +177,39 @@ const User = ({ user, setUser, token }) => {
             <h3>Welcome {user.firstname}</h3>
             <div className="update-profile">
               <div className="update-item firstname" onClick={handleClick}>
-                <div className="first firstname">Change first name</div>
+                <div className="first firstname">Change First Name</div>
                 <div>></div>
               </div>
 
               <hr />
               <div className="update-item lastname" onClick={handleClick}>
-                <div className="first lastname">Change last name</div>
+                <div className="first lastname">Change Last Name</div>
                 <div>></div>
               </div>
 
               <hr />
               <div className="update-item email" onClick={handleClick}>
-                <div className="first email">Change e-mail</div>
+                <div className="first email">Change E-mail</div>
                 <div>></div>
               </div>
 
               <hr />
               <div className="update-item password" onClick={handleClick}>
-                <div className="first password">Change password</div>
+                <div className="first password">Change Password</div>
                 <div>></div>
               </div>
 
               <hr />
               <div className="update-item image" onClick={handleClick}>
                 <div className="first image">Change Avatar</div>
+                <div>></div>
+              </div>
+
+              <hr />
+              <div className="update-item delete" onClick={handleDelete}>
+                <div className="first delete">
+                  Delete Your Account(This will also delete your all comments )
+                </div>
                 <div>></div>
               </div>
             </div>

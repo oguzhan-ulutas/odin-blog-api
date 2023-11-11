@@ -42,8 +42,8 @@ const Comments = ({ blogPost, user, token, id }) => {
         token={token}
         id={id}
       />
-      <h3>{postComments[0]._id ? postComments.length : "0"} Comments</h3>
-      {postComments[0]._id
+      <h3>{postComments.length ? postComments.length : "0"} Comments</h3>
+      {postComments.length
         ? postComments.map((comment) => {
             return (
               <div key={comment._id} className="comments">

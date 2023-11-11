@@ -57,27 +57,27 @@ const avatar4 = {
   desc: 'User avatar',
 };
 
-fs.readFile('backend/avatar_image/avatar.png', (err, dataImg) => {
+fs.readFile('./avatar_image/avatar.png', (err, dataImg) => {
   if (err) throw err;
 
   avatar0.data = base64.fromByteArray(dataImg);
 });
-fs.readFile('backend/avatar_image/avatar1.png', (err, dataImg) => {
+fs.readFile('./avatar_image/avatar1.png', (err, dataImg) => {
   if (err) throw err;
 
   avatar1.data = base64.fromByteArray(dataImg);
 });
-fs.readFile('backend/avatar_image/avatar2.png', (err, dataImg) => {
+fs.readFile('./avatar_image/avatar2.png', (err, dataImg) => {
   if (err) throw err;
 
   avatar2.data = base64.fromByteArray(dataImg);
 });
-fs.readFile('backend/avatar_image/avatar3.png', (err, dataImg) => {
+fs.readFile('./avatar_image/avatar3.png', (err, dataImg) => {
   if (err) throw err;
 
   avatar3.data = base64.fromByteArray(dataImg);
 });
-fs.readFile('backend/avatar_image/avatar4.png', (err, dataImg) => {
+fs.readFile('./avatar_image/avatar4.png', (err, dataImg) => {
   if (err) throw err;
 
   avatar4.data = base64.fromByteArray(dataImg);

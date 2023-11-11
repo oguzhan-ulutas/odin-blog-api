@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const Comment = require('../models/comment');
 
 // Sing up on post
 exports.signUpPost = [
@@ -152,6 +153,10 @@ exports.deleteUserGet = asyncHandler(async (req, res, next) => {
 
 // Delete user on post
 exports.deleteUserPost = asyncHandler(async (req, res, next) => {
-  await User.findByIdAndRemove(req.body.userid);
-  res.redirect('/');
+  // Find delete all comments by user
+  await Comment.deleteMany({ user: req.currentUser.id });
+
+  // Delete user
+  await User.findByIdAndRemove(req.currentUser.id);
+  res.redirect('/blog-api/v1');
 });

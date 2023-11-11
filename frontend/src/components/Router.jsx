@@ -58,7 +58,9 @@ const Router = () => {
     },
     {
       path: "/blog-api/v1/user/:userid",
-      element: <User user={user} setUser={setUser} token={token} />,
+      element: (
+        <User user={user} setUser={setUser} token={token} setToken={setToken} />
+      ),
       errorElement: <ErrorPage />,
     },
   ]);
