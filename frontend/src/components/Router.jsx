@@ -8,6 +8,7 @@ import LoginPage from "./02-login-page/LoginPage";
 import SignupPage from "./03-signup-page/SignupPage";
 import SingleBlogPost from "./04-single-blog-post/SingleBlogPost";
 import User from "./05-user/User";
+import AdminInfo from "./06-admin/AdminInfo";
 
 const Router = () => {
   const [token, setToken] = useState("");
@@ -41,7 +42,7 @@ const Router = () => {
     },
     {
       path: "/blog-api/v1/signup",
-      element: <SignupPage user={user} setUser={setUser} />,
+      element: <SignupPage user={user} setUser={setUser} setToken={setToken} />,
       errorElement: <ErrorPage />,
     },
     {
@@ -52,6 +53,7 @@ const Router = () => {
           user={user}
           setUser={setUser}
           token={token}
+          setToken={setToken}
         />
       ),
       errorElement: <ErrorPage />,
@@ -61,6 +63,11 @@ const Router = () => {
       element: (
         <User user={user} setUser={setUser} token={token} setToken={setToken} />
       ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/admin/info",
+      element: <AdminInfo user={user} setUser={setUser} setToken={setToken} />,
       errorElement: <ErrorPage />,
     },
   ]);

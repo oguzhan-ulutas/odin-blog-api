@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import avatar from "../../assets/avatar.jpeg";
 
-const Header = ({ user, setUser }) => {
+const Header = ({ user, setUser, setToken }) => {
   const handleLogout = (e) => {
     localStorage.removeItem("data");
     setUser({
@@ -11,12 +11,13 @@ const Header = ({ user, setUser }) => {
       id: "",
       isAdmin: false,
     });
+    setToken("");
   };
 
   return (
     <header>
       <div className="header-title">
-        <Link to="/blog-api/v1/admin/info">
+        <Link to="/admin/info">
           <img src={avatar} alt="Male avatar image" className="avatar" />
         </Link>
         <Link to="/blog-api/v1" className="logo">
@@ -27,6 +28,7 @@ const Header = ({ user, setUser }) => {
         {user.firstname && (
           <>
             <p>Welcome {user.firstname}</p>
+            {user.isAdmin && <Link to="/admin/v1">Control Panel</Link>}
             <Link to={`/blog-api/v1/user/${user.id}`}>Profile</Link>
             <Link to="/blog-api/v1" onClick={handleLogout}>
               Logout

@@ -42,7 +42,7 @@ const LoginPage = ({ user, setUser, setToken }) => {
 
   return (
     <main>
-      <Header user={user} setUser={setUser} />
+      <Header user={user} setUser={setUser} setToken={setToken} />
       <div className="content-container">
         <ErrorLogin data={data} />
         <form action="" onSubmit={handleLogin}>

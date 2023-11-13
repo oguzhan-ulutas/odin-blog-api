@@ -4,7 +4,7 @@ import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import ErrorSignup from "./ErrorSignup";
 
-const SignupPage = ({ user, setUser }) => {
+const SignupPage = ({ user, setUser, setToken }) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ const SignupPage = ({ user, setUser }) => {
 
   return (
     <main>
-      <Header user={user} setUser={setUser} />
+      <Header user={user} setUser={setUser} setToken={setToken}/>
       <div className="content-container">
         <ErrorSignup data={data} />
         <form action="" onSubmit={handleSignup}>

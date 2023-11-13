@@ -53,7 +53,7 @@ const MainPage = ({
 
   return (
     <main>
-      <Header user={user} setUser={setUser} />
+      <Header user={user} setUser={setUser} setToken={setToken} />
       <div className="content-container">
         <BlogPost blogPosts={blogPosts} />
       </div>

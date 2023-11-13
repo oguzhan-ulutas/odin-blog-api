@@ -7,7 +7,7 @@ import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import Comments from "./Comments";
 
-const SingleBlogPost = ({ blogPosts, user, setUser, token }) => {
+const SingleBlogPost = ({ blogPosts, user, setUser, token, setToken }) => {
   const { id } = useParams();
 
   // Get related blog post from blogPosts
@@ -16,7 +16,7 @@ const SingleBlogPost = ({ blogPosts, user, setUser, token }) => {
   const base64String = `data:image/jpeg;base64,${blogPost.image.data}`;
   return (
     <main>
-      <Header user={user} setUser={setUser} />
+      <Header user={user} setUser={setUser} setToken={setToken} />
       <div className="content-container">
         {blogPost.title ? (
           <>
