@@ -26,6 +26,8 @@ const Router = () => {
   // Admin states
   const [posts, setPosts] = useState([]);
   const [renderPosts, setRenderPosts] = useState([]);
+  const [updateMessage, setUpdateMessage] = useState("");
+  const [deleteMessage, setDeleteMessage] = useState("");
 
   // New post state
   const [newPost, setNewPost] = useState({});
@@ -92,6 +94,10 @@ const Router = () => {
           setPosts={setPosts}
           renderPosts={renderPosts}
           setRenderPosts={setRenderPosts}
+          updateMessage={updateMessage}
+          setUpdateMessage={setUpdateMessage}
+          deleteMessage={deleteMessage}
+          setDeleteMessage={setDeleteMessage}
         />
       ),
       children: [
@@ -104,6 +110,10 @@ const Router = () => {
               newPost={newPost}
               setNewPost={setNewPost}
               token={token}
+              updateMessage={updateMessage}
+              setUpdateMessage={setUpdateMessage}
+              deleteMessage={deleteMessage}
+              setDeleteMessage={setDeleteMessage}
             />
           ),
         },

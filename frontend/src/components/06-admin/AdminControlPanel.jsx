@@ -16,7 +16,14 @@ const AdminControlPanel = ({
   setPosts,
   renderPosts,
   setRenderPosts,
+  updateMessage,
+  setUpdateMessage,
+  deleteMessage,
+  setDeleteMessage,
 }) => {
+  //   setDeleteMessage("");
+  //   setUpdateMessage("");
+
   useEffect(() => {
     const url = "http://localhost:3000/blog-api/v1/admin";
 
@@ -39,7 +46,7 @@ const AdminControlPanel = ({
       .catch(function (err) {
         console.log(err);
       });
-  }, []);
+  }, [updateMessage, deleteMessage]);
 
   const renderPublished = () => {
     const publishedPosts = posts.filter((post) => {

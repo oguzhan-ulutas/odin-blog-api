@@ -87,7 +87,6 @@ exports.postEditGet = asyncHandler(async (req, res, next) => {
 
 // Edit post on post req.
 exports.postEditPost = asyncHandler(async (req, res, next) => {
-  console.log(req.body);
   // Check if user admin
   if (!req.currentUser.isAdmin) {
     res.json({ msg: 'You are not authorized' });

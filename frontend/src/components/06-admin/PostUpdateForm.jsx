@@ -3,20 +3,31 @@ import { useParams } from "react-router-dom";
 
 import "./PostUpdateForm.css";
 
-const PostUpdateForm = ({ posts, newPost, setNewPost, token }) => {
+const PostUpdateForm = ({
+  posts,
+  newPost,
+  setNewPost,
+  token,
+  updateMessage,
+  setUpdateMessage,
+  deleteMessage,
+  setDeleteMessage,
+}) => {
   const { postid } = useParams();
   const [post] = posts.filter((post) => post._id === postid);
-  const [msg, setMsg] = useState("");
-  const [deleteMessage, setDeleteMessage] = useState("");
 
   // Set newpost satate to old post
   useEffect(() => {
     setNewPost(post);
   }, [post]);
 
+  useEffect(() => {
+    setUpdateMessage("");
+    setDeleteMessage("");
+  }, []);
+
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.name);
     setNewPost({ ...newPost, [e.target.name]: e.target.value });
   };
 
@@ -30,14 +41,14 @@ const PostUpdateForm = ({ posts, newPost, setNewPost, token }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(newPost._id),
+      body: JSON.stringify(newPost),
       mode: "cors",
     })
       .then(function (res) {
         return res.json();
       })
       .then(function (res) {
-        setMsg(res.msg);
+        setUpdateMessage(res.msg);
       })
       .catch(function (err) {
         console.log(err);
@@ -71,68 +82,74 @@ const PostUpdateForm = ({ posts, newPost, setNewPost, token }) => {
   return (
     <>
       <h2>Update Post: </h2>
-      <form action="" onSubmit={handleSubmit}>
-        <img src={`data:image/jpeg;base64,${post.image.data}`} alt="" />
+      {updateMessage ? (
+        <h5>{updateMessage}</h5>
+      ) : deleteMessage ? (
+        <h5>{deleteMessage}</h5>
+      ) : (
+        <>
+          <form action="" onSubmit={handleSubmit}>
+            <img src={`data:image/jpeg;base64,${post.image.data}`} alt="" />
 
-        <div>
-          <label htmlFor="image">Image: </label>
-          <input
-            type="file"
-            placeholder="Add image..."
-            name="image"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              const reader = new FileReader();
-              reader.readAsDataURL(file);
+            <div>
+              <label htmlFor="image">Image: </label>
+              <input
+                type="file"
+                placeholder="Add image..."
+                name="image"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  const reader = new FileReader();
+                  reader.readAsDataURL(file);
 
-              reader.onloadend = () => {
-                const base64String = reader.result.split(",")[1];
-                setNewPost({ ...newPost, image: { data: base64String } });
-              };
-            }}
-          />
-        </div>
+                  reader.onloadend = () => {
+                    const base64String = reader.result.split(",")[1];
+                    setNewPost({ ...newPost, image: { data: base64String } });
+                  };
+                }}
+              />
+            </div>
 
-        <div>
-          <label htmlFor="title">Title: </label>
-          <input
-            type="text"
-            defaultValue={post.title}
-            name="title"
-            onChange={handleChange}
-          />
-        </div>
+            <div>
+              <label htmlFor="title">Title: </label>
+              <input
+                type="text"
+                defaultValue={post.title}
+                name="title"
+                onChange={handleChange}
+              />
+            </div>
 
-        <div>
-          <label htmlFor="body">Body: </label>
-          <textarea
-            type="text"
-            defaultValue={post.body}
-            name="body"
-            onChange={handleChange}
-          />
-        </div>
+            <div>
+              <label htmlFor="body">Body: </label>
+              <textarea
+                type="text"
+                defaultValue={post.body}
+                name="body"
+                onChange={handleChange}
+              />
+            </div>
 
-        <div>
-          <label htmlFor="isPublished">Publish: </label>
-          <input
-            type="checkbox"
-            defaultValue={post.isPublished}
-            name="isPublished"
-            className="check-box"
-            onChange={(e) => {
-              console.log(e.target.checked);
-              setNewPost({ ...newPost, isPublished: e.target.checked });
-            }}
-          />
-        </div>
-        <button>Update</button>
-      </form>
-      {msg ? <h5>{msg}</h5> : null}
-      {deleteMessage ? <h5>{deleteMessage}</h5> : null}
-      <button className="delete-button" onClick={handleDelete}>
-        Delete Post
-      </button>
+            <div>
+              <label htmlFor="isPublished">Publish: </label>
+              <input
+                type="checkbox"
+                defaultValue={post.isPublished}
+                name="isPublished"
+                className="check-box"
+                onChange={(e) => {
+                  console.log(e.target.checked);
+                  setNewPost({ ...newPost, isPublished: e.target.checked });
+                }}
+              />
+            </div>
+            <button>Update</button>
+          </form>
+          <button className="delete-button" onClick={handleDelete}>
+            Delete Post
+          </button>
+        </>
+      )}
     </>
   );
 };
