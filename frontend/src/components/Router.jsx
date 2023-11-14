@@ -10,6 +10,7 @@ import SingleBlogPost from "./04-single-blog-post/SingleBlogPost";
 import User from "./05-user/User";
 import AdminInfo from "./06-admin/AdminInfo";
 import AdminControlPanel from "./06-admin/AdminControlPanel";
+import BlogPost from "./01-main-page/BlogPost";
 
 const Router = () => {
   const [token, setToken] = useState("");
@@ -20,6 +21,10 @@ const Router = () => {
     isAdmin: false,
   });
   const [blogPosts, setBlogPosts] = useState([]);
+
+  // Admin states
+  const [posts, setPosts] = useState([]);
+  const [renderPosts, setRenderPosts] = useState([]);
 
   const router = createBrowserRouter([
     {
@@ -79,8 +84,15 @@ const Router = () => {
           setUser={setUser}
           token={token}
           setToken={setToken}
+          posts={posts}
+          setPosts={setPosts}
+          renderPosts={renderPosts}
+          setRenderPosts={setRenderPosts}
         />
       ),
+      children: [
+        { index: true, element: <BlogPost blogPosts={renderPosts} /> },
+      ],
       errorElement: <ErrorPage />,
     },
   ]);

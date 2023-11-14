@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import "./AdminControlPanel.css";
@@ -7,9 +7,16 @@ import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import BlogPost from "../01-main-page/BlogPost";
 
-const AdminControlPanel = ({ user, setUser, token, setToken }) => {
-  const [posts, setPosts] = useState([]);
-  const [renderPosts, setRenderPosts] = useState([]);
+const AdminControlPanel = ({
+  user,
+  setUser,
+  token,
+  setToken,
+  posts,
+  setPosts,
+  renderPosts,
+  setRenderPosts,
+}) => {
   useEffect(() => {
     const url = "http://localhost:3000/blog-api/v1/admin";
 
@@ -68,7 +75,7 @@ const AdminControlPanel = ({ user, setUser, token, setToken }) => {
         </nav>
         <div className="content">
           {!user.isAdmin && <p>You are not authorized.</p>}
-          <BlogPost blogPosts={renderPosts} />
+          <Outlet blogPosts={renderPosts} />
         </div>
       </div>
       <Footer />
