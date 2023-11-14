@@ -41,23 +41,19 @@ const AdminControlPanel = ({
       });
   }, []);
 
-  const renderPublished = (e) => {
-    e.preventDefault();
+  const renderPublished = () => {
     const publishedPosts = posts.filter((post) => {
       return post.isPublished;
     });
     setRenderPosts(publishedPosts);
   };
 
-  const renderUnpublished = (e) => {
-    e.preventDefault();
-
+  const renderUnpublished = () => {
     const unpublishedPosts = posts.filter((post) => !post.isPublished);
     setRenderPosts(unpublishedPosts);
   };
 
-  const renderAllPosts = (e) => {
-    e.preventDefault();
+  const renderAllPosts = () => {
     setRenderPosts(posts);
   };
 
@@ -66,9 +62,15 @@ const AdminControlPanel = ({
       <Header user={user} setUser={setUser} setToken={setToken} />
       <div className="admin-content-container">
         <nav>
-          <Link onClick={renderAllPosts}>All Blog Posts</Link>
-          <Link onClick={renderPublished}>Published Blog Posts</Link>
-          <Link onClick={renderUnpublished}>Unpublished Blog Posts</Link>
+          <Link to="/blog-api/v1/admin" onClick={renderAllPosts}>
+            All Blog Posts
+          </Link>
+          <Link to="/blog-api/v1/admin" onClick={renderPublished}>
+            Published Blog Posts
+          </Link>
+          <Link to="/blog-api/v1/admin" onClick={renderUnpublished}>
+            Unpublished Blog Posts
+          </Link>
           <Link>All Users</Link>
           <hr />
           <Link>Add New Post</Link>

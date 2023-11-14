@@ -11,6 +11,7 @@ import User from "./05-user/User";
 import AdminInfo from "./06-admin/AdminInfo";
 import AdminControlPanel from "./06-admin/AdminControlPanel";
 import BlogPost from "./01-main-page/BlogPost";
+import PostUpdateForm from "./06-admin/PostUpdateForm";
 
 const Router = () => {
   const [token, setToken] = useState("");
@@ -25,6 +26,9 @@ const Router = () => {
   // Admin states
   const [posts, setPosts] = useState([]);
   const [renderPosts, setRenderPosts] = useState([]);
+
+  // New post state
+  const [newPost, setNewPost] = useState({});
 
   const router = createBrowserRouter([
     {
@@ -92,6 +96,16 @@ const Router = () => {
       ),
       children: [
         { index: true, element: <BlogPost blogPosts={renderPosts} /> },
+        {
+          path: "post/:postid",
+          element: (
+            <PostUpdateForm
+              posts={posts}
+              newPost={newPost}
+              setNewPost={setNewPost}
+            />
+          ),
+        },
       ],
       errorElement: <ErrorPage />,
     },

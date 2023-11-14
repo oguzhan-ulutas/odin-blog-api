@@ -63,10 +63,10 @@ router.get('/admin/add-new', adminController.addNewGet);
 router.post('/admin/add-new', adminController.addNewPost);
 
 // Display post edit page on get
-router.get('/admin/post/:postid/edit', adminController.postEditGet);
+router.get('/admin/post/:postid', adminController.postEditGet);
 
 // Edit post on post req.
-router.post('/admin/post/:postid/edit', adminController.postEditPost);
+router.post('/admin/post/:postid', adminController.postEditPost);
 
 // Display post delete warning on get
 router.get('/admin/post/:postid/delete', adminController.postDeleteGet);
