@@ -87,7 +87,16 @@ exports.postEditGet = asyncHandler(async (req, res, next) => {
 
 // Edit post on post req.
 exports.postEditPost = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Edit post on post req.');
+  console.log(req.body);
+  // Check if user admin
+  if (!req.currentUser.isAdmin) {
+    res.json({ msg: 'You are not authorized' });
+  }
+
+  // Create new blogpost object
+  const post = new BlogPost(req.body);
+  await BlogPost.findByIdAndUpdate(req.body._id, post, {});
+  res.json({ msg: 'Success on edit' });
 });
 
 // Display post delete warning on get

@@ -103,6 +103,7 @@ const Router = () => {
               posts={posts}
               newPost={newPost}
               setNewPost={setNewPost}
+              token={token}
             />
           ),
         },
