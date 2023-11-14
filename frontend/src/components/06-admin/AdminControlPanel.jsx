@@ -9,6 +9,7 @@ import BlogPost from "../01-main-page/BlogPost";
 
 const AdminControlPanel = ({ user, setUser, token, setToken }) => {
   const [posts, setPosts] = useState([]);
+  const [renderPosts, setRenderPosts] = useState([]);
   useEffect(() => {
     const url = "http://localhost:3000/blog-api/v1/admin";
 
@@ -26,18 +27,27 @@ const AdminControlPanel = ({ user, setUser, token, setToken }) => {
       })
       .then(function (res) {
         setPosts(res.posts);
-        console.log(res);
+        setRenderPosts(res.posts);
       })
       .catch(function (err) {
         console.log(err);
       });
   }, []);
+
+  const renderPublished = (e) => {
+    e.preventDefault();
+    const publishedPosts = posts.filter((post) => {
+      return post.isPublished;
+    });
+    setRenderPosts(publishedPosts);
+  };
+
   return (
     <main>
       <Header user={user} setUser={setUser} setToken={setToken} />
       <div className="admin-content-container">
         <nav>
-          <Link>Published Blog Posts</Link>
+          <Link onClick={renderPublished}>Published Blog Posts</Link>
           <Link>Unpublished Blog Posts</Link>
           <Link>All Users</Link>
           <hr />
@@ -45,7 +55,7 @@ const AdminControlPanel = ({ user, setUser, token, setToken }) => {
         </nav>
         <div className="content">
           {!user.isAdmin && <p>You are not authorized.</p>}
-          <BlogPost blogPosts={posts} />
+          <BlogPost blogPosts={renderPosts} />
         </div>
       </div>
       <Footer />
