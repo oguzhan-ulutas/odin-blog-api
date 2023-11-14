@@ -42,13 +42,26 @@ const AdminControlPanel = ({ user, setUser, token, setToken }) => {
     setRenderPosts(publishedPosts);
   };
 
+  const renderUnpublished = (e) => {
+    e.preventDefault();
+
+    const unpublishedPosts = posts.filter((post) => !post.isPublished);
+    setRenderPosts(unpublishedPosts);
+  };
+
+  const renderAllPosts = (e) => {
+    e.preventDefault();
+    setRenderPosts(posts);
+  };
+
   return (
     <main>
       <Header user={user} setUser={setUser} setToken={setToken} />
       <div className="admin-content-container">
         <nav>
+          <Link onClick={renderAllPosts}>All Blog Posts</Link>
           <Link onClick={renderPublished}>Published Blog Posts</Link>
-          <Link>Unpublished Blog Posts</Link>
+          <Link onClick={renderUnpublished}>Unpublished Blog Posts</Link>
           <Link>All Users</Link>
           <hr />
           <Link>Add New Post</Link>
