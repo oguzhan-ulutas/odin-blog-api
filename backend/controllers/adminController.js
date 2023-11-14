@@ -2,6 +2,8 @@ const asyncHandler = require('express-async-handler');
 const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 
+const BlogPost = require('../models/blogPost');
+
 const mongoDB =
   'mongodb+srv://mkoulutas:PISrPqLGt8mgiwRR@cluster0.ighlcln.mongodb.net/?retryWrites=true&w=majority';
 
@@ -25,7 +27,21 @@ const upload = multer({ storage });
 
 // Display admin control panel
 exports.index = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Admin control panel');
+  // Check if user admin
+  if (!req.currentUser.isAdmin) {
+    res.json({ msg: 'You are not authorized' });
+    return;
+  }
+  // Get  blog post data from database
+  const posts = await BlogPost.find({})
+    .populate({
+      path: 'comments',
+      populate: { path: 'user', select: 'firstname lastname avatar isAdmin _id' },
+    })
+    .sort({ date: 1 })
+    .exec();
+
+  res.json({ posts });
 });
 
 // Display log in form on get

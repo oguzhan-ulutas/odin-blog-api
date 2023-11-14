@@ -28,7 +28,9 @@ const Header = ({ user, setUser, setToken }) => {
         {user.firstname && (
           <>
             <p>Welcome {user.firstname}</p>
-            {user.isAdmin && <Link to="/admin/v1">Control Panel</Link>}
+            {user.isAdmin && (
+              <Link to="/blog-api/v1/admin/">Control Panel</Link>
+            )}
             <Link to={`/blog-api/v1/user/${user.id}`}>Profile</Link>
             <Link to="/blog-api/v1" onClick={handleLogout}>
               Logout

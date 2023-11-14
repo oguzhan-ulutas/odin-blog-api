@@ -12,3 +12,5 @@ Content-Type: image/jpeg
 
 @/Users/oguzhan/Downloads/photo.jpg
 --boundary--
+
+GET http://localhost:3000/blog-api/v1/admin/

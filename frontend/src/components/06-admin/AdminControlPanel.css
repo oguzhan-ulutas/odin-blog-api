@@ -1,0 +1,19 @@
+.admin-content-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.admin-content-container nav {
+  border-right: 7px ridge rgb(200, 200, 200);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+.admin-content-container nav hr {
+  width: 100%;
+}
+
+.admin-content-container .content {
+  padding: 50px;
+}
