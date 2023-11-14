@@ -91,6 +91,7 @@ exports.postEditPost = asyncHandler(async (req, res, next) => {
   // Check if user admin
   if (!req.currentUser.isAdmin) {
     res.json({ msg: 'You are not authorized' });
+    return;
   }
 
   // Create new blogpost object
@@ -106,10 +107,24 @@ exports.postDeleteGet = asyncHandler(async (req, res, next) => {
 
 // Delete post on post req.
 exports.postDeletePost = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Delete post on post req.');
+  // Check if user admin
+  if (!req.currentUser.isAdmin) {
+    res.json({ msg: 'You are not authorized' });
+    return;
+  }
+
+  const post = await BlogPost.findByIdAndRemove(req.body.id);
+
+  if (post) {
+    // Post deleted
+    res.json({ msg: 'Post deleted' });
+    return;
+  }
+
+  res.json({ msg: 'Post could not found. It may be deleted already.' });
 });
 
-// Display all coments of a post
+// Display all comments of a post
 exports.commentsGet = asyncHandler(async (req, res, next) => {
   res.send('NOT IMPLEMENTED: Display all comments of the post');
 });

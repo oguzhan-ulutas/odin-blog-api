@@ -62,6 +62,9 @@ router.get('/admin/add-new', adminController.addNewGet);
 // Add new post on post
 router.post('/admin/add-new', adminController.addNewPost);
 
+// Delete post on post req.
+router.post('/admin/post/:postid/delete', adminController.postDeletePost);
+
 // Display post edit page on get
 router.get('/admin/post/:postid', adminController.postEditGet);
 
@@ -70,9 +73,6 @@ router.post('/admin/post/:postid', adminController.postEditPost);
 
 // Display post delete warning on get
 router.get('/admin/post/:postid/delete', adminController.postDeleteGet);
-
-// Delete post on post req.
-router.post('/admin/post/:postid/delete', adminController.postDeletePost);
 
 // Display all coments of a post
 router.get('/admin/post/:postid/comments', adminController.commentsGet);

@@ -7,6 +7,7 @@ const PostUpdateForm = ({ posts, newPost, setNewPost, token }) => {
   const { postid } = useParams();
   const [post] = posts.filter((post) => post._id === postid);
   const [msg, setMsg] = useState("");
+  const [deleteMessage, setDeleteMessage] = useState("");
 
   // Set newpost satate to old post
   useEffect(() => {
@@ -29,7 +30,7 @@ const PostUpdateForm = ({ posts, newPost, setNewPost, token }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(newPost),
+      body: JSON.stringify(newPost._id),
       mode: "cors",
     })
       .then(function (res) {
@@ -37,6 +38,30 @@ const PostUpdateForm = ({ posts, newPost, setNewPost, token }) => {
       })
       .then(function (res) {
         setMsg(res.msg);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    const url = `http://localhost:3000/blog-api/v1/admin/post/${postid}/delete`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ id: newPost._id }),
+      mode: "cors",
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        setDeleteMessage(res.msg);
       })
       .catch(function (err) {
         console.log(err);
@@ -104,6 +129,10 @@ const PostUpdateForm = ({ posts, newPost, setNewPost, token }) => {
         <button>Update</button>
       </form>
       {msg ? <h5>{msg}</h5> : null}
+      {deleteMessage ? <h5>{deleteMessage}</h5> : null}
+      <button className="delete-button" onClick={handleDelete}>
+        Delete Post
+      </button>
     </>
   );
 };
