@@ -12,6 +12,7 @@ import AdminInfo from "./06-admin/AdminInfo";
 import AdminControlPanel from "./06-admin/AdminControlPanel";
 import BlogPost from "./01-main-page/BlogPost";
 import PostUpdateForm from "./06-admin/PostUpdateForm";
+import AddNewPost from "./06-admin/AddNewPost";
 
 const Router = () => {
   const [token, setToken] = useState("");
@@ -116,6 +117,10 @@ const Router = () => {
               setDeleteMessage={setDeleteMessage}
             />
           ),
+        },
+        {
+          path: "add-new",
+          element: <AddNewPost newPost={newPost} setNewPost={setNewPost} />,
         },
       ],
       errorElement: <ErrorPage />,

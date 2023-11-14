@@ -80,11 +80,11 @@ const AdminControlPanel = ({
           </Link>
           <Link>All Users</Link>
           <hr />
-          <Link>Add New Post</Link>
+          <Link to="/blog-api/v1/admin/add-new">Add New Post</Link>
         </nav>
         <div className="content">
           {!user.isAdmin && <p>You are not authorized.</p>}
-          <Outlet blogPosts={renderPosts} />
+          <Outlet />
         </div>
       </div>
       <Footer />
