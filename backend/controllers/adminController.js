@@ -4,6 +4,7 @@ const { GridFsStorage } = require('multer-gridfs-storage');
 
 const BlogPost = require('../models/blogPost');
 const Comment = require('../models/comment');
+const User = require('../models/user');
 
 const mongoDB =
   'mongodb+srv://mkoulutas:PISrPqLGt8mgiwRR@cluster0.ighlcln.mongodb.net/?retryWrites=true&w=majority';
@@ -158,4 +159,19 @@ exports.commentDeleteGet = asyncHandler(async (req, res, next) => {
 // Delete comment on post req.
 exports.commentDeletePost = asyncHandler(async (req, res, next) => {
   res.send('NOT IMPLEMENTED: Delete comment on post req.');
+});
+
+// Display all users on get
+exports.allUsersGet = asyncHandler(async (req, res, next) => {
+  // if user is not admin send warning
+  if (!req.currentUser.isAdmin) {
+    return res.json({ msg: 'You are not authorized' });
+  }
+
+  const users = await User.find()
+    .select('firstname lastname isAdmin avatar _id')
+    .sort({ firstname: 1 })
+    .exec();
+
+  res.json({ users });
 });

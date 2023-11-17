@@ -7,6 +7,10 @@ textarea {
   background-color: red;
 }
 
+.comment-buttons button {
+  background-color: red;
+}
+
 .comments-container {
   display: flex;
   flex-direction: column;

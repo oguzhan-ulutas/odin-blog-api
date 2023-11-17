@@ -75,7 +75,7 @@ const AdminControlPanel = ({
           <Link to="/blog-api/v1/admin" onClick={renderUnpublished}>
             Unpublished Blog Posts
           </Link>
-          <Link>All Users</Link>
+          <Link to="/blog-api/v1/admin/users">All Users</Link>
           <hr />
           <Link to="/blog-api/v1/admin/add-new">Add New Post</Link>
         </nav>

@@ -13,6 +13,7 @@ import AdminControlPanel from "./06-admin/AdminControlPanel";
 import BlogPost from "./01-main-page/BlogPost";
 import PostUpdateForm from "./06-admin/PostUpdateForm";
 import AddNewPost from "./06-admin/AddNewPost";
+import AllUsers from "./06-admin/AllUsers";
 
 const Router = () => {
   const [token, setToken] = useState("");
@@ -29,6 +30,7 @@ const Router = () => {
   const [renderPosts, setRenderPosts] = useState([]);
   const [updateMessage, setUpdateMessage] = useState("");
   const [deleteMessage, setDeleteMessage] = useState("");
+  const [users, setUsers] = useState([]);
 
   // New post state
   const [newPost, setNewPost] = useState({});
@@ -129,6 +131,10 @@ const Router = () => {
               setPosts={setPosts}
             />
           ),
+        },
+        {
+          path: "users",
+          element: <AllUsers token={token} users={users} setUsers={setUsers} />,
         },
       ],
       errorElement: <ErrorPage />,

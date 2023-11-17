@@ -12,13 +12,13 @@ const MainPage = ({
   blogPosts,
   setBlogPosts,
 }) => {
-  useEffect(() => {
+  if (!token) {
     // Get token from local storage
     const data = JSON.parse(localStorage.getItem("data") || null);
     if (data) {
       setToken(data.token);
     }
-  }, []);
+  }
 
   // Authenticate user if token exist
   const fetchUser = async () => {

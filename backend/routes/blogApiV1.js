@@ -47,6 +47,9 @@ router.post('/comment/:id', commentController.deletePost);
 router.post('/comment', commentController.addNew);
 
 // ADMIN ROUTES
+// Display all users on get
+router.get('/admin/users', adminController.allUsersGet);
+
 // Display admin control panel
 router.get('/admin', adminController.index);
 
