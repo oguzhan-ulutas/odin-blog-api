@@ -3,6 +3,7 @@ const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 
 const BlogPost = require('../models/blogPost');
+const Comment = require('../models/comment');
 
 const mongoDB =
   'mongodb+srv://mkoulutas:PISrPqLGt8mgiwRR@cluster0.ighlcln.mongodb.net/?retryWrites=true&w=majority';
@@ -74,7 +75,7 @@ exports.addNewPost = asyncHandler(async (req, res, next) => {
   });
 
   await post.save();
-  res.json(post);
+  res.json({ post, msg: 'Post succesfully added.' });
 });
 exports.postDetailGet = asyncHandler(async (req, res, next) => {
   res.send('NOT IMPLEMENTED: Display single post detail');
@@ -111,8 +112,14 @@ exports.postDeletePost = asyncHandler(async (req, res, next) => {
     res.json({ msg: 'You are not authorized' });
     return;
   }
+  const post = await BlogPost.findById(req.body.id).populate('comments');
+  // Extract comment IDs from the populated 'comments' field
+  const commentIds = post.comments.map((comment) => comment._id);
+  // Delete the comments
+  await Comment.deleteMany({ _id: { $in: commentIds } });
 
-  const post = await BlogPost.findByIdAndRemove(req.body.id);
+  // Delete blog post
+  await BlogPost.findByIdAndRemove(req.body.id);
 
   if (post) {
     // Post deleted

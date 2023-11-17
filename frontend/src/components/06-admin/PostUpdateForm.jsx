@@ -18,7 +18,7 @@ const PostUpdateForm = ({
   const { postid } = useParams();
   const [post] = posts.filter((post) => post._id === postid);
 
-  const [comments, setComments] = useState(post.comments);
+  const [comments, setComments] = useState(post ? post.comments : []);
 
   // Set newpost satate to old post
   useEffect(() => {
@@ -86,7 +86,6 @@ const PostUpdateForm = ({
   // Delete comment
   const handleDeleteComment = (e) => {
     e.preventDefault();
-    console.log(post);
 
     const commentid = e.target.className;
     const url = `http://localhost:3000/blog-api/v1/comment/${commentid}`;
@@ -117,9 +116,7 @@ const PostUpdateForm = ({
       <h2>Update Post: </h2>
       {updateMessage ? (
         <h5>{updateMessage}</h5>
-      ) : deleteMessage ? (
-        <h5>{deleteMessage}</h5>
-      ) : (
+      ) : post ? (
         <>
           <form action="" onSubmit={handleSubmit}>
             <img src={`data:image/jpeg;base64,${post.image.data}`} alt="" />
@@ -178,9 +175,11 @@ const PostUpdateForm = ({
             </div>
             <button>Update</button>
           </form>
+
           <button className="delete-button" onClick={handleDelete}>
-            Delete Post
+            Delete Post (This will delete all the comments of post)
           </button>
+
           <h3>Comments of Post: </h3>
           <div className="comments-container">
             {comments.length === 0 ? (
@@ -216,6 +215,8 @@ const PostUpdateForm = ({
             )}
           </div>
         </>
+      ) : (
+        <h5>{deleteMessage}</h5>
       )}
     </>
   );
