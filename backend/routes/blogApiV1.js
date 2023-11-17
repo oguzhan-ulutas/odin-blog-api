@@ -74,7 +74,7 @@ router.post('/admin/post/:postid', adminController.postEditPost);
 // Display post delete warning on get
 router.get('/admin/post/:postid/delete', adminController.postDeleteGet);
 
-// Display all coments of a post
+// Display all comments of a post
 router.get('/admin/post/:postid/comments', adminController.commentsGet);
 
 // Display comment edit page on get

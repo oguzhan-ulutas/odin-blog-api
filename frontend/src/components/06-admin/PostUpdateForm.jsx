@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { format, parseISO } from "date-fns";
+import HTMLString from "react-html-string";
 
 import "./PostUpdateForm.css";
 
@@ -15,6 +17,8 @@ const PostUpdateForm = ({
 }) => {
   const { postid } = useParams();
   const [post] = posts.filter((post) => post._id === postid);
+
+  const [comments, setComments] = useState(post.comments);
 
   // Set newpost satate to old post
   useEffect(() => {
@@ -73,6 +77,35 @@ const PostUpdateForm = ({
       })
       .then(function (res) {
         setDeleteMessage(res.msg);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  // Delete comment
+  const handleDeleteComment = (e) => {
+    e.preventDefault();
+    console.log(post);
+
+    const commentid = e.target.className;
+    const url = `http://localhost:3000/blog-api/v1/comment/${commentid}`;
+    // Sending post req. to api
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ commentid, blogPostId: post._id }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        post.comments = res.comments;
+        setComments(res.comments);
       })
       .catch(function (err) {
         console.log(err);
@@ -148,6 +181,40 @@ const PostUpdateForm = ({
           <button className="delete-button" onClick={handleDelete}>
             Delete Post
           </button>
+          <h3>Comments of Post: </h3>
+          <div className="comments-container">
+            {comments.length === 0 ? (
+              <p>The post has no comments yet.</p>
+            ) : (
+              comments.map((comment) => {
+                return (
+                  <div key={comment._id} className="comments">
+                    <div className="comment-header">
+                      <img
+                        src={`data:image/png;base64,${comment.user.avatar.data}`}
+                        alt=""
+                      />
+                      <p>
+                        {comment.user.firstname} {comment.user.lastname}
+                      </p>
+                      <time>{format(parseISO(comment.date), "MMMM d, y")}</time>
+                    </div>
+                    <div className="comment-body">
+                      <HTMLString html={comment.body} />
+                    </div>
+                    <div className="comment-buttons">
+                      <button
+                        className={comment._id}
+                        onClick={handleDeleteComment}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
         </>
       )}
     </>
