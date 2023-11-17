@@ -60,22 +60,22 @@ exports.addNewGet = asyncHandler(async (req, res, next) => {
 });
 
 // Add new post on post req.
-exports.addNewPost = [
-  upload.single('blogPhoto'),
+exports.addNewPost = asyncHandler(async (req, res, next) => {
+  // If user is not admin
+  if (!req.currentUser.isAdmin) {
+    return res.json({ msg: 'You are not authorized.' });
+  }
+  const post = await new BlogPost({
+    title: req.body.title,
+    body: req.body.body,
+    isPublished: req.body.isPublished,
+    image: { data: req.body.image.data },
+    comments: [],
+  });
 
-  asyncHandler(async (req, res, next) => {
-    const { file } = req;
-    // Respond with the file details
-    res.send({
-      message: 'Uploaded',
-      id: file.id,
-      name: file.filename,
-      contentType: file.contentType,
-    });
-  }),
-];
-
-// Display single post detail
+  await post.save();
+  res.json(post);
+});
 exports.postDetailGet = asyncHandler(async (req, res, next) => {
   res.send('NOT IMPLEMENTED: Display single post detail');
 });

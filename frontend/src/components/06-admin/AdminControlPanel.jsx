@@ -21,9 +21,6 @@ const AdminControlPanel = ({
   deleteMessage,
   setDeleteMessage,
 }) => {
-  //   setDeleteMessage("");
-  //   setUpdateMessage("");
-
   useEffect(() => {
     const url = "http://localhost:3000/blog-api/v1/admin";
 

@@ -120,7 +120,15 @@ const Router = () => {
         },
         {
           path: "add-new",
-          element: <AddNewPost newPost={newPost} setNewPost={setNewPost} />,
+          element: (
+            <AddNewPost
+              newPost={newPost}
+              setNewPost={setNewPost}
+              token={token}
+              posts={posts}
+              setPosts={setPosts}
+            />
+          ),
         },
       ],
       errorElement: <ErrorPage />,

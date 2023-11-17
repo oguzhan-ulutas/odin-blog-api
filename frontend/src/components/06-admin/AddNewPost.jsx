@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
-const AddNewPost = ({ newPost, setNewPost }) => {
+const AddNewPost = ({ newPost, setNewPost, token, posts, setPosts }) => {
   useEffect(() => {
-    setNewPost({});
+    setNewPost({ isPublished: false });
   }, []);
 
   const handleChange = (e) => {
@@ -10,9 +10,39 @@ const AddNewPost = ({ newPost, setNewPost }) => {
     setNewPost({ ...newPost, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const url = "http://localhost:3000/blog-api/v1/admin/add-new";
+
+    // Sending post req. to api
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(newPost),
+      mode: "cors",
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        if (res.msg) {
+          return;
+        }
+        setPosts([...posts, res]);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
   console.log(newPost);
+  console.log(posts);
   return (
-    <form action="">
+    <form action="" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="image">Image: </label>
         <input
