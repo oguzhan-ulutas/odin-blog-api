@@ -27,7 +27,33 @@ const AllUsers = ({ token, users, setUsers }) => {
       });
   }, []);
 
-  const handleDelete = () => {};
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    const userId = e.target.className;
+
+    console.log(userId);
+    const url = `http://localhost:3000/blog-api/v1/user/${userId}/delete`;
+
+    fetch(url, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ userId }),
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (res) {
+        setUsers(res);
+      })
+      .catch(function (err) {
+        console.log("User delete ERROR: ", err);
+      });
+  };
 
   console.log(users);
   return (

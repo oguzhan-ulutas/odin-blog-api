@@ -21,6 +21,9 @@ router.post('/signup', userController.signUpPost);
 // Log in on post
 router.post('/login', userController.loginPost);
 
+// Delete user on post
+router.post('/user/:id/delete', userController.deleteUserPost);
+
 // Log out on post
 router.get('/user/logout/:id', userController.logout);
 
@@ -32,9 +35,6 @@ router.post('/user/:id/update', userController.updateUserPost);
 
 // Show delete user warning
 router.get('/user/:id/delete', userController.deleteUserGet);
-
-// Delete user on post
-router.post('/user/:id/delete', userController.deleteUserPost);
 
 // COMMENT ROUTES
 // Display warning on delete get
