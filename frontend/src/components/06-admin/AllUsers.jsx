@@ -27,10 +27,15 @@ const AllUsers = ({ token, users, setUsers }) => {
       });
   }, []);
 
+  const handleDelete = () => {};
+
   console.log(users);
   return (
     <div className="users-container">
       {users.map((user) => {
+        if (user.isAdmin) {
+          return;
+        }
         return (
           <div key={user._id} className="user-container">
             <img
@@ -39,8 +44,10 @@ const AllUsers = ({ token, users, setUsers }) => {
             />
             <p>{`${user.firstname} ${user.lastname}`}</p>
             <p>{`Admin: ${user.isAdmin}`}</p>
-            <Link>All comments of user</Link>
-            <button>Delete User</button>
+
+            <button className={user._id} onClick={handleDelete}>
+              Delete User
+            </button>
           </div>
         );
       })}
