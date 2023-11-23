@@ -36,6 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+app.use(cors({ credentials: true, origin: 'https://odin-blog-api.vercel.app/' }));
 app.use(fileuploader());
 
 // Verify user if req. object has token
