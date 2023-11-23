@@ -38,12 +38,6 @@ exports.addNew = [
   }),
 ];
 
-// Display warning on delete get
-exports.deleteGet = asyncHandler(async (req, res, next) => {
-  // Probably this route is unnecessary, the form can be implemented in frontend
-  res.send('NOT IMPLEMENTED: Display warning on delete get');
-});
-
 // Delete comment on post
 exports.deletePost = asyncHandler(async (req, res, next) => {
   // Delete comment from the blogPost

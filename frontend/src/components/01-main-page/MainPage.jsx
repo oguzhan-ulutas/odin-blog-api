@@ -38,7 +38,6 @@ const MainPage = ({
       if (response.status === 200) {
         setUser(data.user);
         setBlogPosts(data.blogPosts);
-        console.log("Succes on fetch", data);
       } else {
         console.log(response);
       }

@@ -116,7 +116,6 @@ const User = ({ user, setUser, token, setToken }) => {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    console.log(user.id);
 
     const url = `http://localhost:3000/blog-api/v1/user/${user.id}/delete`;
 

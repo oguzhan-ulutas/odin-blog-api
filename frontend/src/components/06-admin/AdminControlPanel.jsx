@@ -1,11 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import "./AdminControlPanel.css";
 
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
-import BlogPost from "../01-main-page/BlogPost";
 
 const AdminControlPanel = ({
   user,
@@ -14,12 +13,9 @@ const AdminControlPanel = ({
   setToken,
   posts,
   setPosts,
-  renderPosts,
   setRenderPosts,
   updateMessage,
-  setUpdateMessage,
   deleteMessage,
-  setDeleteMessage,
 }) => {
   useEffect(() => {
     const url = "http://localhost:3000/blog-api/v1/admin";

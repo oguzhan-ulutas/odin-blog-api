@@ -32,7 +32,6 @@ const AllUsers = ({ token, users, setUsers }) => {
 
     const userId = e.target.className;
 
-    console.log(userId);
     const url = `http://localhost:3000/blog-api/v1/user/${userId}/delete`;
 
     fetch(url, {
@@ -55,7 +54,6 @@ const AllUsers = ({ token, users, setUsers }) => {
       });
   };
 
-  console.log(users);
   return (
     <div className="users-container">
       {users.map((user) => {

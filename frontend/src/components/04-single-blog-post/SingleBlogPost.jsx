@@ -1,7 +1,5 @@
-import base64 from "base64-js";
 import { format, parseISO } from "date-fns";
 import { useParams, Link } from "react-router-dom";
-import { useEffect } from "react";
 
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";

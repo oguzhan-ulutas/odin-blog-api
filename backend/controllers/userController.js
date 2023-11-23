@@ -37,8 +37,6 @@ exports.signUpPost = [
     // crypt password
     const salt = bcrypt.genSaltSync(10);
 
-    console.log(req.body);
-
     // Create new user
     const user = new User({
       firstname: req.body.firstname,
@@ -103,24 +101,6 @@ exports.loginPost = asyncHandler(async (req, res, next) => {
   );
 });
 
-// Log out
-exports.logout = asyncHandler(async (req, res, next) => {
-  // Probably this route is unnecessary, log out can be implemented in frontend
-  res.send('NOT IMPLEMENTED: Log out');
-});
-
-// Display user info
-exports.displayUser = asyncHandler(async (req, res, next) => {
-  // Probably this route is unnecessary, display user can be implemented in frontend
-  res.send('NOT IMPLEMENTED: Display user info');
-});
-
-// Display update user form
-exports.updateUserGet = asyncHandler(async (req, res, next) => {
-  // Probably this route is unnecessary, update user get can be implemented in frontend
-  res.send('NOT IMPLEMENTED: Display user update form');
-});
-
 // Update user info on post
 exports.updateUserPost = async (req, res, next) => {
   // Extract the validation errors from a request.
@@ -145,16 +125,8 @@ exports.updateUserPost = async (req, res, next) => {
   2;
 };
 
-// Show delete user warning
-exports.deleteUserGet = asyncHandler(async (req, res, next) => {
-  // Probably this route is unnecessary, delete get can be implemented in frontend
-  res.send('NOT IMPLEMENTED: Display delete warning');
-});
-
 // Delete user on post
 exports.deleteUserPost = asyncHandler(async (req, res, next) => {
-  console.log('heloooo');
-  console.log(req.body);
   // Find delete all comments by user
   await Comment.deleteMany({ user: req.body.userId });
 
