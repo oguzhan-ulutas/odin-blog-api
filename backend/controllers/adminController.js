@@ -78,7 +78,8 @@ exports.postEditPost = asyncHandler(async (req, res, next) => {
   // Create new blogpost object
   const post = new BlogPost(req.body);
   await BlogPost.findByIdAndUpdate(req.body._id, post, {});
-  res.json({ msg: 'Success on edit' });
+
+  res.json({ msg: 'Success on edit', post });
 });
 
 // Delete post on post req.
@@ -121,19 +122,3 @@ exports.allUsersGet = asyncHandler(async (req, res, next) => {
 
   res.json({ users });
 });
-
-// Delete user on post
-// exports.deleteUserPostAdmin = asyncHandler(async (res, req, next) => {
-//   console.log('helooo');
-//   console.log(req.body);
-//   console.log(req.params);
-//   // Find delete all comments by user
-//   // await Comment.deleteMany({ user: req.body.userid });
-
-//   // // Delete user
-//   // await User.findByIdAndRemove(req.body.userid);
-
-//   // // Fetch remaining users
-//   // const users = await User.find({});
-//   res.json({ hello: 'helo' });
-// });
