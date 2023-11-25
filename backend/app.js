@@ -6,9 +6,8 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-const multer = require('multer');
 const fileuploader = require('express-fileupload');
-const { GridFsStorage } = require('multer-gridfs-storage');
+require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const blogApiRouter = require('./routes/blogApiV1'); // Import routes for "blog api v1" area of site
@@ -35,13 +34,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
-// app.use(cors({ credentials: true, origin: 'https://odin-blog-api.vercel.app/' }));
+app.use(cors({ credentials: true, origin: process.env.clientUrl }));
 app.use(fileuploader());
-// app.use((res, req, next) => {
-//   console.log(req.url);
-//   next();
-// });
 
 // Verify user if req. object has token
 app.use((req, res, next) => {
