@@ -4,7 +4,7 @@ import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import ErrorSignup from "./ErrorSignup";
 
-const SignupPage = ({ user, setUser, setToken }) => {
+const SignupPage = ({ user, setUser, setToken, baseUrl }) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ const SignupPage = ({ user, setUser, setToken }) => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:3000/blog-api/v1/signup";
+    const url = `${baseUrl}signup`;
 
     // Sending post req. to api
     fetch(url, {
@@ -36,7 +36,7 @@ const SignupPage = ({ user, setUser, setToken }) => {
 
   return (
     <main>
-      <Header user={user} setUser={setUser} setToken={setToken}/>
+      <Header user={user} setUser={setUser} setToken={setToken} />
       <div className="content-container">
         <ErrorSignup data={data} />
         <form action="" onSubmit={handleSignup}>

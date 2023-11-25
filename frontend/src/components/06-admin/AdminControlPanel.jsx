@@ -16,9 +16,10 @@ const AdminControlPanel = ({
   setRenderPosts,
   updateMessage,
   deleteMessage,
+  baseUrl,
 }) => {
   useEffect(() => {
-    const url = "http://localhost:3000/blog-api/v1/admin";
+    const url = `${baseUrl}admin`;
 
     // Sending post req. to api
     fetch(url, {

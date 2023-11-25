@@ -33,6 +33,7 @@ const Router = () => {
 
   // New post state
   const [newPost, setNewPost] = useState({});
+  const baseUrl = import.meta.env.VITE_baseUrl;
 
   const router = createBrowserRouter([
     {
@@ -45,18 +46,33 @@ const Router = () => {
           setUser={setUser}
           blogPosts={blogPosts}
           setBlogPosts={setBlogPosts}
+          baseUrl={baseUrl}
         />
       ),
       errorElement: <ErrorPage />,
     },
     {
       path: "/blog-api/v1/login",
-      element: <LoginPage user={user} setToken={setToken} setUser={setUser} />,
+      element: (
+        <LoginPage
+          user={user}
+          setToken={setToken}
+          setUser={setUser}
+          baseUrl={baseUrl}
+        />
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: "/blog-api/v1/signup",
-      element: <SignupPage user={user} setUser={setUser} setToken={setToken} />,
+      element: (
+        <SignupPage
+          user={user}
+          setUser={setUser}
+          setToken={setToken}
+          baseUrl={baseUrl}
+        />
+      ),
       errorElement: <ErrorPage />,
     },
     {
@@ -68,6 +84,7 @@ const Router = () => {
           setUser={setUser}
           token={token}
           setToken={setToken}
+          baseUrl={baseUrl}
         />
       ),
       errorElement: <ErrorPage />,
@@ -75,7 +92,13 @@ const Router = () => {
     {
       path: "/blog-api/v1/user/:userid",
       element: (
-        <User user={user} setUser={setUser} token={token} setToken={setToken} />
+        <User
+          user={user}
+          setUser={setUser}
+          token={token}
+          setToken={setToken}
+          baseUrl={baseUrl}
+        />
       ),
       errorElement: <ErrorPage />,
     },
@@ -100,6 +123,7 @@ const Router = () => {
           setUpdateMessage={setUpdateMessage}
           deleteMessage={deleteMessage}
           setDeleteMessage={setDeleteMessage}
+          baseUrl={baseUrl}
         />
       ),
       children: [
@@ -116,6 +140,7 @@ const Router = () => {
               setUpdateMessage={setUpdateMessage}
               deleteMessage={deleteMessage}
               setDeleteMessage={setDeleteMessage}
+              baseUrl={baseUrl}
             />
           ),
         },
@@ -128,12 +153,20 @@ const Router = () => {
               token={token}
               posts={posts}
               setPosts={setPosts}
+              baseUrl={baseUrl}
             />
           ),
         },
         {
           path: "users",
-          element: <AllUsers token={token} users={users} setUsers={setUsers} />,
+          element: (
+            <AllUsers
+              token={token}
+              users={users}
+              setUsers={setUsers}
+              baseUrl={baseUrl}
+            />
+          ),
         },
       ],
       errorElement: <ErrorPage />,

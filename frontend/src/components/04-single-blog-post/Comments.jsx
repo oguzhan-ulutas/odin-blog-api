@@ -4,14 +4,14 @@ import HTMLString from "react-html-string";
 
 import CreateComment from "./CreateComment";
 
-const Comments = ({ blogPost, user, token, id }) => {
+const Comments = ({ blogPost, user, token, id, baseUrl }) => {
   const [postComments, setPostComments] = useState(blogPost.comments);
 
   const handleDelete = (e) => {
     e.preventDefault();
 
     const commentid = e.target.className;
-    const url = `http://localhost:3000/blog-api/v1/comment/${commentid}`;
+    const url = `${baseUrl}comment/${commentid}`;
     // Sending post req. to api
     fetch(url, {
       method: "POST",
@@ -41,6 +41,7 @@ const Comments = ({ blogPost, user, token, id }) => {
         setPostComments={setPostComments}
         token={token}
         id={id}
+        baseUrl={baseUrl}
       />
       <h3>{postComments.length ? postComments.length : "0"} Comments</h3>
       {postComments.length

@@ -5,7 +5,7 @@ import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import ErrorLogin from "./ErrorLogin";
 
-const LoginPage = ({ user, setUser, setToken }) => {
+const LoginPage = ({ user, setUser, setToken, baseUrl }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [data, setData] = useState({});
@@ -13,7 +13,7 @@ const LoginPage = ({ user, setUser, setToken }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:3000/blog-api/v1/login";
+    const url = `${baseUrl}login`;
 
     try {
       const response = await fetch(url, {

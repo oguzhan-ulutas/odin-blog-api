@@ -48,11 +48,11 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Add new post on post req.
 exports.addNewPost = asyncHandler(async (req, res, next) => {
-  // If user is not admin
   if (!req.currentUser.isAdmin) {
+    console.log('helooo');
     return res.json({ msg: 'You are not authorized.' });
   }
-  const post = await new BlogPost({
+  const post = new BlogPost({
     title: req.body.title,
     body: req.body.body,
     isPublished: req.body.isPublished,
@@ -61,7 +61,7 @@ exports.addNewPost = asyncHandler(async (req, res, next) => {
   });
 
   await post.save();
-  res.json({ post, msg: 'Post succesfully added.' });
+  res.json({ post, msg: 'Post successfully added.' });
 });
 exports.postDetailGet = asyncHandler(async (req, res, next) => {
   res.send('NOT IMPLEMENTED: Display single post detail');
@@ -83,6 +83,7 @@ exports.postEditPost = asyncHandler(async (req, res, next) => {
 
 // Delete post on post req.
 exports.postDeletePost = asyncHandler(async (req, res, next) => {
+  console.log(req.body);
   // Check if user admin
   if (!req.currentUser.isAdmin) {
     res.json({ msg: 'You are not authorized' });
@@ -120,3 +121,19 @@ exports.allUsersGet = asyncHandler(async (req, res, next) => {
 
   res.json({ users });
 });
+
+// Delete user on post
+// exports.deleteUserPostAdmin = asyncHandler(async (res, req, next) => {
+//   console.log('helooo');
+//   console.log(req.body);
+//   console.log(req.params);
+//   // Find delete all comments by user
+//   // await Comment.deleteMany({ user: req.body.userid });
+
+//   // // Delete user
+//   // await User.findByIdAndRemove(req.body.userid);
+
+//   // // Fetch remaining users
+//   // const users = await User.find({});
+//   res.json({ hello: 'helo' });
+// });

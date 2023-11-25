@@ -3,13 +3,20 @@ import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const CreateComment = ({ user, postComments, setPostComments, token, id }) => {
+const CreateComment = ({
+  user,
+  postComments,
+  setPostComments,
+  token,
+  id,
+  baseUrl,
+}) => {
   const [comment, setComment] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:3000/blog-api/v1/comment";
+    const url = `${baseUrl}comment`;
 
     // Sending post req. to api
     fetch(url, {

@@ -5,7 +5,14 @@ import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 import Comments from "./Comments";
 
-const SingleBlogPost = ({ blogPosts, user, setUser, token, setToken }) => {
+const SingleBlogPost = ({
+  blogPosts,
+  user,
+  setUser,
+  token,
+  setToken,
+  baseUrl,
+}) => {
   const { id } = useParams();
 
   // Get related blog post from blogPosts
@@ -35,7 +42,13 @@ const SingleBlogPost = ({ blogPosts, user, setUser, token, setToken }) => {
               }}
             />
 
-            <Comments blogPost={blogPost} user={user} token={token} id={id} />
+            <Comments
+              blogPost={blogPost}
+              user={user}
+              token={token}
+              id={id}
+              baseUrl={baseUrl}
+            />
           </>
         ) : null}
       </div>

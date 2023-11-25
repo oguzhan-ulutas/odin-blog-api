@@ -35,6 +35,9 @@ router.post('/comment/:id', commentController.deletePost);
 router.post('/comment', commentController.addNew);
 
 // ADMIN ROUTES
+// Delete user on post
+// router.post('//user//delete', adminController.deleteUserPostAdmin);
+
 // Display all users on get
 router.get('/admin/users', adminController.allUsersGet);
 
@@ -45,7 +48,7 @@ router.get('/admin', adminController.index);
 router.post('/admin/add-new', adminController.addNewPost);
 
 // Delete post on post req.
-router.post('/admin/post/:postid/delete', adminController.postDeletePost);
+router.post('/post/:postid/delete', adminController.postDeletePost);
 
 // Edit post on post req.
 router.post('/admin/post/:postid', adminController.postEditPost);

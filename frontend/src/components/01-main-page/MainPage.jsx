@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+// require("dotenv").config();
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -11,6 +12,7 @@ const MainPage = ({
   setUser,
   blogPosts,
   setBlogPosts,
+  baseUrl,
 }) => {
   if (!token) {
     // Get token from local storage
@@ -22,7 +24,7 @@ const MainPage = ({
 
   // Authenticate user if token exist
   const fetchUser = async () => {
-    const url = "http://localhost:3000/blog-api/v1/";
+    const url = baseUrl;
 
     try {
       const response = await fetch(url, {

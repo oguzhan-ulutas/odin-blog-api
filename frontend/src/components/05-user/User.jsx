@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import Header from "../01-main-page/Header";
 import Footer from "../01-main-page/Footer";
 
-const User = ({ user, setUser, token, setToken }) => {
+const User = ({ user, setUser, token, setToken, baseUrl }) => {
   const [fieldName, setFieldName] = useState("");
   const [fieldString, setFieldString] = useState("");
   const [inputType, setInputType] = useState("");
@@ -47,7 +47,7 @@ const User = ({ user, setUser, token, setToken }) => {
     let obj = { [fieldName]: input };
 
     // Sending post req. to api
-    const url = `http://localhost:3000/blog-api/v1/user/${user.id}/update`;
+    const url = `${baseUrl}user/${user.id}/update`;
 
     // Crypt the password
     if (fieldName === "password") {
@@ -117,7 +117,7 @@ const User = ({ user, setUser, token, setToken }) => {
   const handleDelete = (e) => {
     e.preventDefault();
 
-    const url = `http://localhost:3000/blog-api/v1/user/${user.id}/delete`;
+    const url = `${baseUrl}user/${user.id}/delete`;
 
     // Sending post req. to api
     fetch(url, {
@@ -135,7 +135,7 @@ const User = ({ user, setUser, token, setToken }) => {
         console.log(err);
       });
 
-    // Deleting token from local storage
+    //Deleting token from local storage
     localStorage.removeItem("data");
     setUser({
       firstname: "",

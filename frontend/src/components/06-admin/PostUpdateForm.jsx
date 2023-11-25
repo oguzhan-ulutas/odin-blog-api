@@ -14,6 +14,7 @@ const PostUpdateForm = ({
   setUpdateMessage,
   deleteMessage,
   setDeleteMessage,
+  baseUrl,
 }) => {
   const { postid } = useParams();
   const [post] = posts.filter((post) => post._id === postid);
@@ -38,7 +39,7 @@ const PostUpdateForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const url = `http://localhost:3000/blog-api/v1/admin/post/${postid}`;
+    const url = `${baseUrl}admin/post/${postid}`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -62,7 +63,7 @@ const PostUpdateForm = ({
   const handleDelete = (e) => {
     e.preventDefault();
 
-    const url = `http://localhost:3000/blog-api/v1/admin/post/${postid}/delete`;
+    const url = `${baseUrl}post/${postid}/delete`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -88,7 +89,7 @@ const PostUpdateForm = ({
     e.preventDefault();
 
     const commentid = e.target.className;
-    const url = `http://localhost:3000/blog-api/v1/comment/${commentid}`;
+    const url = `${baseUrl}comment/${commentid}`;
     // Sending post req. to api
     fetch(url, {
       method: "POST",

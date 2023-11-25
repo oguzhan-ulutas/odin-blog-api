@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 import "./AllUsers.css";
 
-const AllUsers = ({ token, users, setUsers }) => {
+const AllUsers = ({ token, users, setUsers, baseUrl }) => {
   useEffect(() => {
-    const url = "http://localhost:3000/blog-api/v1/admin/users";
+    const url = `${baseUrl}admin/users`;
 
     // Sending post req. to api
     fetch(url, {
@@ -30,18 +30,19 @@ const AllUsers = ({ token, users, setUsers }) => {
   const handleDelete = (e) => {
     e.preventDefault();
 
-    const userId = e.target.className;
+    const userid = e.target.className;
 
-    const url = `http://localhost:3000/blog-api/v1/user/${userId}/delete`;
+    const url = `${baseUrl}user/${userid}/delete`;
+    console.log(url);
 
     fetch(url, {
       method: "POST",
-      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ userId }),
+      body: JSON.stringify({ userid }),
+      mode: "cors",
     })
       .then(function (res) {
         return res.json();
@@ -67,7 +68,7 @@ const AllUsers = ({ token, users, setUsers }) => {
               alt="User avatar"
             />
             <p>{`${user.firstname} ${user.lastname}`}</p>
-            <p>{`Admin: ${user.isAdmin}`}</p>
+            <p>{`isAdmin: ${user.isAdmin}`}</p>
 
             <button className={user._id} onClick={handleDelete}>
               Delete User

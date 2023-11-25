@@ -120,18 +120,17 @@ exports.updateUserPost = async (req, res, next) => {
       avatar: updatedUser.avatar,
       isAdmin: updatedUser.avatar,
     };
-    res.redirect(user.url);
+    res.json(user);
   }
-  2;
 };
 
 // Delete user on post
 exports.deleteUserPost = asyncHandler(async (req, res, next) => {
   // Find delete all comments by user
-  await Comment.deleteMany({ user: req.body.userId });
+  await Comment.deleteMany({ user: req.body.userid });
 
   // Delete user
-  await User.findByIdAndRemove(req.body.userId);
+  await User.findByIdAndRemove(req.body.userid);
 
   // Fetch remaining users
   const users = await User.find({});

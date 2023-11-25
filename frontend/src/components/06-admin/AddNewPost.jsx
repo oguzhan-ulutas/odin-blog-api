@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 
-const AddNewPost = ({ newPost, setNewPost, token, posts, setPosts }) => {
+const AddNewPost = ({
+  newPost,
+  setNewPost,
+  token,
+  posts,
+  setPosts,
+  baseUrl,
+}) => {
   const [addNewMessage, setAddNewMessage] = useState("");
   useEffect(() => {
     setNewPost({ isPublished: false });
@@ -14,7 +21,7 @@ const AddNewPost = ({ newPost, setNewPost, token, posts, setPosts }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:3000/blog-api/v1/admin/add-new";
+    const url = `${baseUrl}admin/add-new`;
 
     // Sending post req. to api
     fetch(url, {
