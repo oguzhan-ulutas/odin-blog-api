@@ -11,6 +11,12 @@ require('dotenv').config();
 
 const compression = require('compression');
 const helmet = require('helmet');
+const RateLimit = require('express-rate-limit');
+
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 50,
+});
 
 const indexRouter = require('./routes/index');
 const blogApiRouter = require('./routes/blogApiV1'); // Import routes for "blog api v1" area of site
@@ -49,6 +55,8 @@ app.use(
     },
   }),
 );
+// Apply rate limiter to all requests
+app.use(limiter);
 
 // Verify user if req. object has token
 app.use((req, res, next) => {
