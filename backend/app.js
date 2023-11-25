@@ -9,6 +9,7 @@ const cors = require('cors');
 const fileuploader = require('express-fileupload');
 require('dotenv').config();
 
+const compression = require('compression');
 const indexRouter = require('./routes/index');
 const blogApiRouter = require('./routes/blogApiV1'); // Import routes for "blog api v1" area of site
 
@@ -33,6 +34,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({ credentials: true, origin: process.env.clientUrl }));
 app.use(fileuploader());
