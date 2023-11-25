@@ -13,6 +13,7 @@ import BlogPost from "./01-main-page/BlogPost";
 import PostUpdateForm from "./06-admin/PostUpdateForm";
 import AddNewPost from "./06-admin/AddNewPost";
 import AllUsers from "./06-admin/AllUsers";
+import Home from "./07-home-navigator/Home";
 
 const Router = () => {
   const [token, setToken] = useState("");
@@ -36,6 +37,11 @@ const Router = () => {
   const baseUrl = import.meta.env.VITE_baseUrl;
 
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+      errorElement: <ErrorPage />,
+    },
     {
       path: "/blog-api/v1",
       element: (
