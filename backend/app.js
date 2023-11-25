@@ -10,6 +10,8 @@ const fileuploader = require('express-fileupload');
 require('dotenv').config();
 
 const compression = require('compression');
+const helmet = require('helmet');
+
 const indexRouter = require('./routes/index');
 const blogApiRouter = require('./routes/blogApiV1'); // Import routes for "blog api v1" area of site
 
@@ -38,6 +40,15 @@ app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({ credentials: true, origin: process.env.clientUrl }));
 app.use(fileuploader());
+// Add helmet to the middleware chain.
+// Set CSP headers to allow our Bootstrap and Jquery to be served
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      'script-src': ["'self'", 'code.jquery.com', 'cdn.jsdelivr.net'],
+    },
+  }),
+);
 
 // Verify user if req. object has token
 app.use((req, res, next) => {
